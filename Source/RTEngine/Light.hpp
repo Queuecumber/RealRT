@@ -1,15 +1,13 @@
 #pragma once
-#include <gmath.h>
 
-using gmath::vector;
 
-class light
+class Light
 {
 public:
-	virtual ~light(void){}
+    virtual ~Light(void){}
 
 	bool IsLight(){return true;}
 
 protected:
-	light(){}
+    Light(){}
 };

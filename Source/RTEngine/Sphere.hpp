@@ -1,35 +1,26 @@
 #pragma once
-#include "shape3d.h"
-#include <gmath.h>
 
-using gmath::vector;
+#include "Shape.hpp"
+#include <opencv2/opencv.hpp>
 
-
-/*
-	class sphere <- class shape3D
-
-	provdes the mathematic model of a sphere
-*/
-
-
-
-class sphere :
-	public shape3D
+namespace RealRT
 {
-public:
-	sphere(MATERIAL<> mat = BLANK, vector<3,double> &center = vector<3,double>(), double radius = 2.5);
-	~sphere(void);
 
-	double HasIntersection(ray &incident, bool &flipnormals);
-	vector<3,double> GetNormal(vector<3,double> pt);
+    class Sphere : public Shape
+    {
+    public:
+        Sphere(MATERIAL<> mat = BLANK, const cv::Vec3d &center = cv::Vec3d::zeros(3), double radius = 2.5);
+        ~Sphere(void);
 
-	double GetRadius();
-	vector<3,double> &GetCenter();
+        double Intersect(const Ray &incident, bool &flipNormals) const;
+        cv::Vec3d Normal(const cv::Point3d &pt) const;
 
+        double Radius(void) const;
+        cv::Vec3d Center(void) const;
 
-private:
-	vector<3,double> cen;
-	double rad;
-};
+    private:
+        cv::Point3d _Center;
+        double _Radius;
+    };
 
-
+}

@@ -1,31 +1,41 @@
-#include "Sphere.h"
+#include "Sphere.hpp"
 
-sphere::sphere(MATERIAL<> mat, vector<3,double> &center, double radius)
-: shape3D(mat), cen(center), rad(radius) {}
+using namespace RealRT;
 
-sphere::~sphere(void){};
-
-double sphere::GetRadius()
+Sphere::Sphere(MATERIAL<> mat, const cv::Vec3d &center, double radius)
+    : Shape(mat)
+    , _Center(center)
+    , _Radius(radius)
 {
-	return rad;
+
 }
 
-vector<3,double> &sphere::GetCenter()
+Sphere::~Sphere(void)
 {
-	return cen;
+
 }
 
-double sphere::HasIntersection(ray &incident, bool &flipnormals)
+double Sphere::Radius(void) const
 {
-	vector<3,double> vec;
-	vec = incident.GetStart() -  cen;
+    return _Radius;
+}
+
+cv::Point3d Sphere::Center(void) const
+{
+    return _Center;
+}
+
+double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
+{
+    cv::Vec3d vec;
+    vec = incident.Origin() - _Center;
 
 	//the direction std::vector doted against the position std::vector of the center of the sphere is b 
-	double b = -(vec * incident.GetDirection());
+    double b = -(vec * incident.Direction());
 
 	//c is the magnitude squared of the center position std::vector, minus the
 	//radius squared
-	double c = vec*vec - pow(rad,2);
+    double c = vec*vec - (_Radius * _Radius);
 
 	//calculate the determinant
 	double det = (b * b) - c;
@@ -66,7 +76,7 @@ double sphere::HasIntersection(ray &incident, bool &flipnormals)
 
 
 
-vector<3,double> sphere::GetNormal(vector<3,double> pt)
+cv::Vec3d Sphere::Normal(const cv::Point3d &pt) const
 {
 	//the normal to a point on the sphere is the vector along the radius, begining at the center and ending at the 
 	//given point. Dividing by the radius makes this a unit vector

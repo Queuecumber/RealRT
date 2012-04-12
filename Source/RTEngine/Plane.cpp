@@ -1,25 +1,28 @@
-#include "plane3d.h"
+#include "Plane.hpp"
 
+using namespace RealRT;
 
-plane3d::plane3d(MATERIAL<> mat, vector<3,double> normal, double d)
-: shape3D(mat)
+Plane::Plane(MATERIAL<> mat, const cv::Vec3d &normal, double d)
+    : shape3D(mat)
+    , _Normal(normal)
+    , _D(d)
 {
-	norm = normal.normalize();
-	this->d = d;
+
 }
 
-vector<3,double> plane3d::GetNormal(vector<3,double> pt)
+cv::Vec3d Plane::Normal(const cv::Point3d &pt) const
 {
-	return norm;
+    return _Normal;
 }
 
-double plane3d::HasIntersection(ray &incident, bool &flipnormals)
+double Plane::Intersect(const Ray &incident, bool &flipNormals) const
 {
 	flipnormals = false;
-	double det = norm * incident.GetDirection();
+
+    double det = _Normal * incident.Direction();
 	if(det != 0)
 	{
-		double dist = -(norm * incident.GetStart() + d) / det;
+        double dist = -(_Normal * incident.Origin() + _D) / det;
 		if(dist > 0)
 			return dist;
 	}
@@ -27,7 +30,14 @@ double plane3d::HasIntersection(ray &incident, bool &flipnormals)
 	return 0;
 }
 
-plane3d::~plane3d(void)
+bool Plane::IsLight(void) const
 {
+    return false;
 }
+
+Plane::~Plane(void)
+{
+
+}
+
 

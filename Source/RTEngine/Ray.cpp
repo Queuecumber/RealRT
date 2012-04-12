@@ -1,25 +1,39 @@
-#include "Ray.h"
+#include "Ray.hpp"
 
-ray::ray(void)
-: pos(vector<3,double>(0,0,0)),dir(vector<3,double>(0,0,1)){}
+using namespace RealRT;
 
-ray::ray(vector<3,double> &start, vector<3,double> &direction)
-: pos(start),dir(direction.normalize()){}
-
-ray::ray(vector<3,double> *start, vector<3,double> *direction)
-: pos(*start),dir(direction->normalize()){}
-
-ray::ray(ray &cp)
-: pos( cp.GetStart() ), dir(cp.GetDirection() ){}
-
-vector<3,double> ray::GetStart()
+Ray::Ray(void)
+    : _Origin(0,0,0)
+    , _Direction(0,0,1)
 {
-	return pos;
+
 }
 
-vector<3,double> ray::GetDirection()
+Ray::Ray(const cv::Point3d &start, const cv::Vec3d &direction)
+    : _Origin(start)
+    , _Direction(direction.normalize())
 {
-	return dir;
+
 }
 
-ray::~ray(){}
+Ray::Ray(const Ray &cp)
+    : _Origin(cp.Origin())
+    , _Direction(cp.Direction())
+{
+
+}
+
+cv::Point3d Ray::Origin(void) const
+{
+    return _Origin;
+}
+
+cv::Vec3d Ray::Direction(void) const
+{
+    return _Direction;
+}
+
+Ray::~Ray(void)
+{
+
+}

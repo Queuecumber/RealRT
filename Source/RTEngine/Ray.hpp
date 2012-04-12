@@ -1,28 +1,24 @@
-/*
-	Ray.h
-
-	deffinition of the ray class used in the 
-	ray tracing algorithm
-*/
 #pragma once
+#include <opencv2/opencv.hpp>
 
-#include <gmath.h>
-using gmath::vector;
-
-class ray
+namespace RealRT
 {
-public:
-	ray(void);
-	ray(vector<3,double> &start, vector<3,double> &direction);
-	ray(vector<3,double> *start, vector<3,double> *direction);
-	ray(ray &cp);
 
-	vector<3,double> GetStart();
-	vector<3,double> GetDirection();
+    class Ray
+    {
+    public:
+        Ray(void);
+        Ray(const cv::Point3d &origin, const cv::Vec3d &direction);
+        Ray(const Ray &cp);
 
-	~ray(void);
+        cv::Point3d Origin(void) const;
+        cv::Vec3d GetDirection(void) const;
 
-private:
-	vector<3,double> pos;
-	vector<3,double> dir;
-};
+        ~Ray(void);
+
+    private:
+        cv::Point3d _Origin;
+        cv::Vec3d _Direction;
+    };
+
+}

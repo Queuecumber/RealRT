@@ -9,10 +9,11 @@ else()
     set(LIBSUFFIX "")
 endif()
 
-set(DEBUG_POSTFIX "d")
-
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BIN_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BIN_DIR}/lib${LIBSUFFIX})
+
+find_library(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIR})
 
 add_subdirectory(RTEngine)
 add_subdirectory(SphereTest)

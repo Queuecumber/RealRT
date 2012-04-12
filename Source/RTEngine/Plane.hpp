@@ -1,22 +1,27 @@
 #pragma once
-#include "shape3d.h"
+#include "Shape.hpp"
 
+#include <opencv2/opencv.hpp>
 
-class plane3d :
-	public shape3D
+namespace RealRT
 {
-public:
-	plane3d(MATERIAL<> mat = MATERIAL<>(), vector<3,double> normal = vector<3,double>(0.0,1.0,0.0), double d = 5);
 
-	vector<3,double> GetNormal(vector<3,double> pt);
+    class Plane : public Shape
+    {
+    public:
+        Plane(MATERIAL<> mat = MATERIAL<>(), const cv::Vec3d &normal = cv::Vec3d(0.0, 0.0, 0.0), double d = 5);
 
-	double HasIntersection(ray &incident,bool &flipnormals);
+        cv::Vec3d Normal(const cv::Point3d &pt) const;
 
-	bool IsLight(){return false;}
+        double Intersect(const Ray &incident, bool &flipNormals) const;
 
-	~plane3d(void);
+        bool IsLight(void) const;
 
-private:
-	vector<3,double> norm;
-	double d;
-};
+        ~Plane(void);
+
+    private:
+        cv::Vec3d _Normal;
+        double _D;
+    };
+
+}

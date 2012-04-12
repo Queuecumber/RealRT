@@ -1,14 +1,22 @@
 #pragma once
-#include "sphere.h"
-#include "light.h"
 
-class SphericalLight :
-	public sphere, public light
+#include "Sphere.hpp"
+
+namespace RealRT
 {
-public:
-	SphericalLight(MATERIAL<> mat = WHITELIGHT, vector<3,double> &center = vector<3,double>(), double radius = 2.5)
-		:sphere(mat,center,radius),light(){}
-	~SphericalLight(void){}
 
-	bool IsLight(){return light::IsLight();}
-};
+    class SphericalLight : public Sphere
+    {
+    public:
+        SphericalLight(MATERIAL<> mat = WHITELIGHT, const cv::Vec3d &center = cv::Vec3d::zeros(3), double radius = 2.5)
+            : Sphere(mat, center, radius)
+        {
+
+        }
+
+        ~SphericalLight(void) { }
+
+        bool IsLight(void) { return true; }
+    };
+
+}

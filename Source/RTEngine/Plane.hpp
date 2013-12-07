@@ -1,6 +1,6 @@
 #pragma once
-#include "Shape.hpp"
 
+#include "Shape.hpp"
 #include <opencv2/opencv.hpp>
 
 namespace RealRT

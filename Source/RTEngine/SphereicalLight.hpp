@@ -16,7 +16,7 @@ namespace RealRT
 
         ~SphericalLight(void) { }
 
-        bool IsLight(void) { return true; }
+        bool IsLight(void) const { return true; }
     };
 
 }

@@ -12,7 +12,7 @@ namespace RealRT
         Ray(const Ray &cp);
 
         cv::Point3d Origin(void) const;
-        cv::Vec3d GetDirection(void) const;
+        cv::Vec3d Direction(void) const;
 
         ~Ray(void);
 

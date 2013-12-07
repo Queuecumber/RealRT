@@ -25,9 +25,9 @@ namespace RealRT
 
     const PhongMaterial Mirror(cv::Scalar(1.0,1.0,1.0),0.9,0.0,0.0,0.1,0.9);
 
-    const PhongMaterial TransluscentGreen(cv::Scalar(0.1,0.9,0.2),0.5,0.0,0.0,0.1,0.9);
-    const PhongMaterial TransluscentRed(cv::Scalar(0.9,0.2,0.1),0.5,0.0,0.0,0.0,1.9);
-    const PhongMaterial TransluscentBlue(cv::Scalar(0.2,0.1,0.9),0.5,0.0,0.0,0.1,0.9);
+    const PhongMaterial TranslucentGreen(cv::Scalar(0.1,0.9,0.2),0.5,0.0,0.0,0.1,0.9);
+    const PhongMaterial TranslucentRed(cv::Scalar(0.9,0.2,0.1),0.5,0.0,0.0,0.0,1.9);
+    const PhongMaterial TranslucentBlue(cv::Scalar(0.2,0.1,0.9),0.5,0.0,0.0,0.1,0.9);
 
     const PhongMaterial Transparent(cv::Scalar(1.0,1.0,1.0),0.5,0.9,1.0,0.0,0.9);
 

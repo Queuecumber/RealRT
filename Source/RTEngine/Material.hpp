@@ -10,6 +10,7 @@ namespace RealRT
     public:
 
         Material(const cv::Scalar &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar);
+        Material(const Material &cp);
 
 
         virtual double BidirectionReflectanceDistributionFunction(const cv::Vec3d &in, const cv::Vec3d &out, const cv::Vec3d &norm) const = 0;
@@ -17,11 +18,13 @@ namespace RealRT
         cv::Scalar Color(void) const;
 
         double Reflectance(void) const;
+
         double Refractance(void) const;
 
         double IndexOfRefraction(void) const;
 
         double DiffuseScalar(void) const;
+
         double SpecularScalar(void) const;
 
     private:

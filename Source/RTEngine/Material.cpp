@@ -13,6 +13,17 @@ Material::Material(const cv::Scalar &color, double reflectance, double refractan
 
 }
 
+Material::Material(const Material &cp)
+    : _Color(cp.Color())
+    , _Reflectance(cp.Reflectance())
+    , _Refractance(cp.Refractance())
+    , _IndexOfRefraction(cp.IndexOfRefraction())
+    , _DiffuseScalar(cp.DiffuseScalar())
+    , _SpecularScalar(cp.SpecularScalar())
+{
+
+}
+
 cv::Scalar Material::Color(void)
 {
     return _Color;

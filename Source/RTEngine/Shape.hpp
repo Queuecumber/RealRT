@@ -1,11 +1,10 @@
 #pragma once
 
-#include "Material.hpp"
-#include "Ray.hpp"
-#include <opencv2/opencv.hpp>
-
 namespace RealRT
 {
+	class Material;
+	class Ray;	
+	class Vector3D;
 
 /*
 	class shape3D
@@ -26,10 +25,10 @@ class Shape
 {
 public:
     Shape(const Material &mat);
-    virtual ~Shape(void);
+    virtual ~Shape(void) = default;
 																			
     virtual double Intersect(const Ray &incident, bool &flipNormals) const = 0; //override to return the distance from the origion to the point of intersection
-    virtual cv::Vec3d Normal(const cv::Point3d &pt) const = 0;	//override to get the UNIT normal at the given point
+    virtual Vector3D Normal(const Vector3D &pt) const = 0;	//override to get the UNIT normal at the given point
 
     virtual bool IsLight(void) const;  //return true if this shape is a light source
 

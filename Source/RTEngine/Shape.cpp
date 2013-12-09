@@ -1,15 +1,11 @@
 #include "Shape.hpp"
-
+#include "Material.hpp"
+#include "Ray.hpp"
 
 using namespace RealRT;
 
 Shape::Shape(const Material &mat)
     : _Material(mat)
-{
-
-}
-
-Shape::~Shape(void)
 {
 
 }

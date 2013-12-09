@@ -34,6 +34,8 @@ namespace RealRT
             
             Vector3D Scale(float scalar) const;
             
+            Vector3D Clip(float maxVal) const;
+            
             Vector3D Weight(Vector3D dimWeights) const
             
             float Dot(const Vector3D &rhs) const;

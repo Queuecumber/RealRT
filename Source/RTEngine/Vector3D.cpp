@@ -69,6 +69,13 @@ Vector3D Vector3D::Scale(float scalar)
     return Vector3D(_I * scalar, _J * scalar, _K * scalar);
 }
 
+Vector3D Vector3D::Clip(float maxVal)
+{
+    return Vector3D(_I > maxVal ? maxVal : _I, 
+                    _J > maxVal ? maxVal : _J, 
+                    _K > maxVal ? maxVal : _K);
+}
+
 Vector3D Vector3D::Weight(const Vector3D &rhs) const
 {
     return Vector3D(_I * rhs._I, _J * rhs._J, _K * rhs._K);

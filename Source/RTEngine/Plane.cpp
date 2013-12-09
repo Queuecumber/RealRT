@@ -2,7 +2,7 @@
 
 using namespace RealRT;
 
-Plane::Plane(MATERIAL<> mat, const cv::Vec3d &normal, double d)
+Plane::Plane(const Material &mat, const cv::Vector3D &normal, float d)
     : shape3D(mat)
     , _Normal(normal)
     , _D(d)
@@ -10,19 +10,19 @@ Plane::Plane(MATERIAL<> mat, const cv::Vec3d &normal, double d)
 
 }
 
-cv::Vec3d Plane::Normal(const cv::Point3d &pt) const
+Vector3D Plane::Normal(const Vector3D &pt) const
 {
     return _Normal;
 }
 
-double Plane::Intersect(const Ray &incident, bool &flipNormals) const
+float Plane::Intersect(const Ray &incident, bool &flipNormals) const
 {
 	flipnormals = false;
 
-    double det = _Normal * incident.Direction();
+    float det = _Normal * incident.Direction();
 	if(det != 0)
 	{
-        double dist = -(_Normal * incident.Origin() + _D) / det;
+        float dist = -(_Normal * incident.Origin() + _D) / det;
 		if(dist > 0)
 			return dist;
 	}
@@ -34,10 +34,4 @@ bool Plane::IsLight(void) const
 {
     return false;
 }
-
-Plane::~Plane(void)
-{
-
-}
-
 

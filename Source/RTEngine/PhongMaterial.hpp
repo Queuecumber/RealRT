@@ -7,11 +7,11 @@ namespace RealRT
 
     class PhongMaterial : public Material
     {
-    public:
+        public:
 
-        PhongMaterial(const Vector3D &color, float reflectance, float refractance, float indexOfRefraction, float diffuseScalar, float specularScalar);
+            PhongMaterial(const Vector3D &color, float reflectance, float refractance, float indexOfRefraction, float diffuseScalar, float specularScalar);
 
-        float BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const;
+            float BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const;
     };
 
     //some material definitions

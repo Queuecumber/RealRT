@@ -8,13 +8,13 @@ namespace RealRT
     class SphericalLight : public Sphere
     {
     public:
-        SphericalLight(MATERIAL<> mat = WHITELIGHT, const cv::Vec3d &center = cv::Vec3d::zeros(3), double radius = 2.5)
+        SphericalLight(const Material &mat, const Vector3D &center = {0.f, 0.f, 0.f}, float radius = 2.5f)
             : Sphere(mat, center, radius)
         {
 
         }
 
-        ~SphericalLight(void) { }
+        ~SphericalLight(void) = default;
 
         bool IsLight(void) const { return true; }
     };

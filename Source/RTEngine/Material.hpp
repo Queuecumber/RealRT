@@ -1,7 +1,5 @@
 #pragma once
 
-#include <opencv2/opencv.hpp>
-
 namespace RealRT
 {
 
@@ -9,34 +7,34 @@ namespace RealRT
     {
     public:
 
-        Material(const cv::Scalar &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar);
+        Material(const Vector3D &color, float reflectance, float refractance, float indexOfRefraction, float diffuseScalar, float specularScalar);
         Material(const Material &cp);
 
 
-        virtual double BidirectionReflectanceDistributionFunction(const cv::Vec3d &in, const cv::Vec3d &out, const cv::Vec3d &norm) const = 0;
+        virtual float BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const = 0;
 
-        cv::Scalar Color(void) const;
+        Vector3D Color(void) const;
 
-        double Reflectance(void) const;
+        float Reflectance(void) const;
 
-        double Refractance(void) const;
+        float Refractance(void) const;
 
-        double IndexOfRefraction(void) const;
+        float IndexOfRefraction(void) const;
 
-        double DiffuseScalar(void) const;
+        float DiffuseScalar(void) const;
 
-        double SpecularScalar(void) const;
+        float SpecularScalar(void) const;
 
     private:
 
-        cv::Scalar _Color;
+        Vector3D _Color;
 
-        double _Reflectance;
-        double _Refractance;
-        double _IndexOfRefraction;
+        float _Reflectance;
+        float _Refractance;
+        float _IndexOfRefraction;
 
-        double _DiffuseScalar;
-        double _SpecularScalar;
+        float _DiffuseScalar;
+        float _SpecularScalar;
     };
 
 }

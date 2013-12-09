@@ -9,30 +9,30 @@ namespace RealRT
     {
     public:
 
-        PhongMaterial(const cv::Scalar &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar);
+        PhongMaterial(const Vector3D &color, float reflectance, float refractance, float indexOfRefraction, float diffuseScalar, float specularScalar);
 
-        double BidirectionReflectanceDistributionFunction(const cv::Vec3d &in, const cv::Vec3d &out, const cv::Vec3d &norm) const;
+        float BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const;
     };
 
     //some material definitions
-    const PhongMaterial DiffuseRed(cv::Scalar(0.9,0.1,0.1),0.1,0.0,0.0,0.9,0.2);
-    const PhongMaterial DiffuseGreen(cv::Scalar(0.1,0.9,0.1),0.1,0.0,0.0,0.9,0.2);
-    const PhongMaterial DiffuseBlue(cv::Scalar(0.1,0.1,0.9),0.1,0.0,0.0,0.9,0.2);
+    const PhongMaterial DiffuseRed(Vector3D(0.9f,0.1f,0.1f),0.1f,0.0f,0.0f,0.9f,0.2f);
+    const PhongMaterial DiffuseGreen(Vector3D(0.1f,0.9f,0.1f),0.1f,0.0f,0.0f,0.9f,0.2f);
+    const PhongMaterial DiffuseBlue(Vector3D(0.1f,0.1f,0.9f),0.1f,0.0f,0.0f,0.9f,0.2f);
 
-    const PhongMaterial ReflectiveRed(cv::Scalar(0.9,0.1,0.1),0.9,0.0,0.0,0.1,0.9);
-    const PhongMaterial ReflectiveGreen(cv::Scalar(0.1,0.9,0.1),0.9,0.0,0.0,0.1,0.9);
-    const PhongMaterial ReflectiveBlue(cv::Scalar(0.1,0.1,0.9),0.9,0.0,0.0,0.1,0.9);
+    const PhongMaterial ReflectiveRed(Vector3D(0.9f,0.1f,0.1f),0.9f,0.0f,0.0f,0.1f,0.9f);
+    const PhongMaterial ReflectiveGreen(Vector3D(0.1f,0.9f,0.1f),0.9f,0.0f,0.0f,0.1f,0.9f);
+    const PhongMaterial ReflectiveBlue(Vector3D(0.1f,0.1f,0.9f),0.9f,0.0f,0.0f,0.1f,0.9f);
 
-    const PhongMaterial Mirror(cv::Scalar(1.0,1.0,1.0),0.9,0.0,0.0,0.1,0.9);
+    const PhongMaterial Mirror(Vector3D(1.0f,1.0f,1.0f),0.9f,0.0f,0.0f,0.1f,0.9f);
 
-    const PhongMaterial TranslucentGreen(cv::Scalar(0.1,0.9,0.2),0.5,0.0,0.0,0.1,0.9);
-    const PhongMaterial TranslucentRed(cv::Scalar(0.9,0.2,0.1),0.5,0.0,0.0,0.0,1.9);
-    const PhongMaterial TranslucentBlue(cv::Scalar(0.2,0.1,0.9),0.5,0.0,0.0,0.1,0.9);
+    const PhongMaterial TranslucentGreen(Vector3D(0.1f,0.9f,0.2f),0.5f,0.0f,0.0f,0.1f,0.9f);
+    const PhongMaterial TranslucentRed(Vector3D(0.9f,0.2f,0.1f),0.5f,0.0f,0.0f,0.0f,1.9f);
+    const PhongMaterial TranslucentBlue(Vector3D(0.2f,0.1f,0.9f),0.5f,0.0f,0.0f,0.1f,0.9f);
 
-    const PhongMaterial Transparent(cv::Scalar(1.0,1.0,1.0),0.5,0.9,1.0,0.0,0.9);
+    const PhongMaterial Transparent(Vector3D(1.0f,1.0f,1.0f),0.5f,0.9f,1.0f,0.0f,0.9f);
 
-    const PhongMaterial WhiteLight(cv::Scalar(1.0,1.0,1.0),0.0,0.0,0.0,1.0,0.0);
+    const PhongMaterial WhiteLight(Vector3D(1.0f,1.0f,1.0f),0.0f,0.0f,0.0f,1.0f,0.0f);
 
-    const PhongMaterial Blank(cv::Scalar(0.0,0.0,0.0),0.0,0.0,0.0,0.0,0.0);
+    const PhongMaterial Blank(Vector3D(0.0f,0.0f,0.0f),0.0f,0.0f,0.0f,0.0f,0.0f);
 
 }

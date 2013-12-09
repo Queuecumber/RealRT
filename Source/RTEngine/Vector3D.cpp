@@ -12,9 +12,9 @@ Vector3D::Vector3D(float i, float j, float k)
 
 explicit Vector3D::Vector3D(const float *values) 
 {
-    _I = list[0];
-    _J = list[1];
-    _K = list[2];
+    _I = values[0];
+    _J = values[1];
+    _K = values[2];
 }
 
 Vector3D(std::initializer_list<float> list)
@@ -112,7 +112,7 @@ bool Vector3D::operator ==(const Vector3D &rhs) const
 
 bool Vector3D::operator !=(const Vector3D &rhs) const 
 {
-    return !(rhs == *this);
+    return !(*this == rhs);
 }
 
 bool Vector3D::operator <(const Vector3D &rhs) const 
@@ -194,10 +194,9 @@ Vector3D Vector3D::operator %(const Vector3D &rhs) const
             
 Vector3D &Vector3D::operator %=(const Vector3D &rhs)
 {
-    Initialize(
-       (_J * rhs._K) - (rhs._J * _K)  ,
-     -((_I * rhs._K) - (rhs._I * _K)) ,
-       (_I * rhs._J) - (rhs._I * _J) );
+	_I =   (_J * rhs._K) - (rhs._J * _K) ;
+    _J = -((_I * rhs._K) - (rhs._I * _K));
+    _K =   (_I * rhs._J) - (rhs._I * _J) ;
     
     return *this;
 }  

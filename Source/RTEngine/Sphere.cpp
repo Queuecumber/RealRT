@@ -1,16 +1,12 @@
 #include "Sphere.hpp"
+#include "Vector3D.hpp"
 
 using namespace RealRT;
 
-Sphere::Sphere(MATERIAL<> mat, const cv::Vec3d &center, double radius)
+Sphere::Sphere(const Material &mat, const Vector3D &center, double radius)
     : Shape(mat)
     , _Center(center)
     , _Radius(radius)
-{
-
-}
-
-Sphere::~Sphere(void)
 {
 
 }
@@ -20,14 +16,14 @@ double Sphere::Radius(void) const
     return _Radius;
 }
 
-cv::Point3d Sphere::Center(void) const
+Vector3D Sphere::Center(void) const
 {
     return _Center;
 }
 
 double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 {
-    cv::Vec3d vec;
+    Vector3D vec;
     vec = incident.Origin() - _Center;
 
 	//the direction std::vector doted against the position std::vector of the center of the sphere is b 
@@ -76,14 +72,11 @@ double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 
 
 
-cv::Vec3d Sphere::Normal(const cv::Point3d &pt) const
+Vector3D Sphere::Normal(const Vector3D &pt) const
 {
 	//the normal to a point on the sphere is the vector along the radius, begining at the center and ending at the 
 	//given point. Dividing by the radius makes this a unit vector
-	vector<3,double> unorm;
+	Vector3D norm = (pt - cen) * rad;
 
-	unorm = (pt - cen) * rad;
-	//unorm->Normalize();
-
-	return unorm;
+	return norm;
 }

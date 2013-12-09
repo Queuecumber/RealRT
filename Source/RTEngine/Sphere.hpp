@@ -1,26 +1,25 @@
 #pragma once
 
 #include "Shape.hpp"
-#include <opencv2/opencv.hpp>
 
 namespace RealRT
 {
 
     class Sphere : public Shape
     {
-    public:
-        Sphere(MATERIAL<> mat = BLANK, const cv::Vec3d &center = cv::Vec3d::zeros(3), double radius = 2.5);
-        ~Sphere(void);
+		public:
+		    Sphere(const Material &mat, const Vector3D &center = {0.f, 0.f, 0.f}, double radius = 2.5);
+		    ~Sphere(void) = default;
 
-        double Intersect(const Ray &incident, bool &flipNormals) const;
-        cv::Vec3d Normal(const cv::Point3d &pt) const;
+		    double Intersect(const Ray &incident, bool &flipNormals) const;
+		    Vector3D Normal(const Vector3D &pt) const;
 
-        double Radius(void) const;
-        cv::Vec3d Center(void) const;
+		    double Radius(void) const;
+		    Vector3D Center(void) const;
 
-    private:
-        cv::Point3d _Center;
-        double _Radius;
+		private:
+		    Vector3D _Center;
+		    double _Radius;
     };
 
 }

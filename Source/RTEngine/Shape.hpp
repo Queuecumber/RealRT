@@ -24,7 +24,7 @@ namespace RealRT
 	class Shape
 	{
 		public:
-			Shape(const Material &mat);
+            Shape(const Material &mat);
 			virtual ~Shape(void) = default;
 																			
 			virtual float Intersect(const Ray &incident, bool &flipNormals) const = 0; //override to return the distance from the origin to the point of intersection
@@ -32,10 +32,9 @@ namespace RealRT
 
 			virtual bool IsLight(void) const;  //return true if this shape is a light source
 
-			const Material &Material(void) const;
+            const Material &SurfaceMaterial(void) const;
 
 		private:
-				const Material &_Material;
+                const Material &_Material;
 	};
-
 }

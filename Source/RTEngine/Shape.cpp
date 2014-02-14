@@ -15,7 +15,7 @@ inline bool Shape::IsLight(void) const
     return false;
 }
 
-const Material &Shape::Material(void) const
+const Material &Shape::SurfaceMaterial(void) const
 {
     return _Material;
 }

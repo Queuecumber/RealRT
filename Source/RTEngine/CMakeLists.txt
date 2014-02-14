@@ -6,7 +6,7 @@ set( RTEngine_HEADERS
     RTEngine.hpp
     Shape.hpp
     Sphere.hpp
-    SphereicalLight.hpp
+    SphericalLight.hpp
     Material.hpp
     PhongMaterial.hpp
 )

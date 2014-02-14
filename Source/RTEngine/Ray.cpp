@@ -16,12 +16,12 @@ Ray::Ray(const Ray &cp)
 
 }
 
-cv::Point3d Ray::Origin(void) const
+Vector3D Ray::Origin(void) const
 {
     return _Origin;
 }
 
-cv::Vec3d Ray::Direction(void) const
+Vector3D Ray::Direction(void) const
 {
     return _Direction;
 }

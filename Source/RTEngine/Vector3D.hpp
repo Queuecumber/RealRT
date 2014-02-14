@@ -22,9 +22,9 @@ namespace RealRT
             
             float K(void) const;
             
-            Vector3D Add(const Vector3D &v) const
+            Vector3D Add(const Vector3D &v) const;
             
-            Vector3D Subtract(const Vector3D &v) const
+            Vector3D Subtract(const Vector3D &v) const;
             
             Vector3D Normalize(void) const;
             
@@ -36,7 +36,7 @@ namespace RealRT
             
             Vector3D Clip(float maxVal) const;
             
-            Vector3D Weight(Vector3D dimWeights) const
+            Vector3D Weight(Vector3D dimWeights) const;
             
             float Dot(const Vector3D &rhs) const;
             

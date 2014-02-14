@@ -2,7 +2,7 @@
 
 using namespace RealRT;
 
-Plane::Plane(const Material &mat, const cv::Vector3D &normal, float d)
+Plane::Plane(const Material &mat, const Vector3D &normal, float d)
     : shape3D(mat)
     , _Normal(normal)
     , _D(d)

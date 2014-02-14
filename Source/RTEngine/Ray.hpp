@@ -1,9 +1,9 @@
 #pragma once
 
+#include "Vector3D.hpp"
+
 namespace RealRT
 {
-    class Vector3D;
-
     class Ray
     {
         public:

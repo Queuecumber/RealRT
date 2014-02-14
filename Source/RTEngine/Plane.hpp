@@ -9,7 +9,7 @@ namespace RealRT
     class Plane : public Shape
     {
 		public:
-            Plane(const Material &mat, const Vector3D &normal = Vector3D({0.f, 0.f, 0.f}), float d = 5.f);
+        Plane(const Material &mat, const Vector3D &normal = Vector3D({0.f, 0.f, 1.f}), float d = 5.f);
 			~Plane(void) = default;
 
 		    float Intersect(const Ray &incident, bool &flipNormals) const;
@@ -18,7 +18,7 @@ namespace RealRT
 		    bool IsLight(void) const;
 
 		private:
-		    Vector3D _Normal;
+            Vector3D _Normal;
 		    float _D;
     };
 

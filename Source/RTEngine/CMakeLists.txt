@@ -9,6 +9,7 @@ set( RTEngine_HEADERS
     SphericalLight.hpp
     Material.hpp
     PhongMaterial.hpp
+    Vector3D.hpp
 )
 
 set( RTEngine_SOURCES 
@@ -19,6 +20,7 @@ set( RTEngine_SOURCES
     Sphere.cpp
     Material.cpp
     PhongMaterial.cpp
+    Vector3D.cpp
 ) 
 
 add_library(RTEngine SHARED ${RTEngine_HEADERS} ${RTEngine_SOURCES})

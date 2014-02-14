@@ -1,9 +1,10 @@
 #include "Plane.hpp"
+#include "Ray.hpp"
 
 using namespace RealRT;
 
 Plane::Plane(const Material &mat, const Vector3D &normal, float d)
-    : shape3D(mat)
+    : Shape(mat)
     , _Normal(normal)
     , _D(d)
 {
@@ -17,7 +18,7 @@ Vector3D Plane::Normal(const Vector3D &pt) const
 
 float Plane::Intersect(const Ray &incident, bool &flipNormals) const
 {
-	flipnormals = false;
+    flipNormals = false;
 
     float det = _Normal * incident.Direction();
 	if(det != 0)

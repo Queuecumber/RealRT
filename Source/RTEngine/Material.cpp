@@ -24,32 +24,32 @@ Material::Material(const Material &cp)
 
 }
 
-Vector3D Material::Color(void)
+Vector3D Material::Color(void) const
 {
     return _Color;
 }
 
-float Material::Reflectance(void)
+float Material::Reflectance(void) const
 {
     return _Reflectance;
 }
 
-float Material::Refractance(void)
+float Material::Refractance(void) const
 {
     return _Refractance;
 }
 
-float Material::IndexOfRefraction(void)
+float Material::IndexOfRefraction(void) const
 {
     return _IndexOfRefraction;
 }
 
-float Material::DiffuseScalar(void)
+float Material::DiffuseScalar(void) const
 {
     return _DiffuseScalar;
 }
 
-float Material::SpecularScalar(void)
+float Material::SpecularScalar(void) const
 {
     return _SpecularScalar;
 }

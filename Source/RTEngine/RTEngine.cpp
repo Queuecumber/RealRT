@@ -1,67 +1,55 @@
-#include "RTEngine.h"
-#include <typeinfo>
-#include <string>
+#include "RTEngine.hpp"
 #include <iostream>
-#include <stack>
-#include <condebug.h>
 
-using std::string;
-using std::endl;
-using std::cerr;
-using std::stack;
-
-
-FILE *activeLog = NULL;
 
 RTEngine *instance = NULL;	//pointer to the only instance of RTEngine
 
-/*
-  Window
-
-  Utility structure that defines the 
-  start x,y for a window on the 
-  screen. This windows size is 
-  usually determined by RTEngine::DefaultWindowSize,
-  however when the screensize is not a multiple of 10,
-  the size can be smaller to account for the edges. Sizes
-  for both axes should always be checked.
-
-*/
-
-struct Window
+namespace RealRT
 {
-	int i;
-	int j;
-	int sizei;
-	int sizej;
-};
+    /*
+      Window
 
-/*
-	TRACENODE
+      Utility structure that defines the
+      start x,y for a window on the
+      screen. This windows size is
+      usually determined by RTEngine::DefaultWindowSize,
+      however when the screensize is not a multiple of 10,
+      the size can be smaller to account for the edges. Sizes
+      for both axes should always be checked.
 
-	Utility structure, represents a 
-	node in the trace tree, this tree is kept implicitly
-	on the stack
+    */
+    class Window
+    {
+        int left;
+        int top;
 
-*/
+        int right;
+        int bottom;
+    };
 
-struct TRACENODE
-{
-	vector<3,double> color;
-	vector<3,double> shapeColor;
+    /*
+        TRACENODE
 
-	ray		r;
-	double	refrIndex;
-	double	multiplier;
-	bool	eval;
+        Utility structure, represents a
+        node in the trace tree, this tree is kept implicitly
+        on the stack
 
-	int	depth;
+    */
+    class TraceNode
+    {
+        Vector3D color;
+        Vector3D shapeColor;
 
-	TRACENODE *parent;
-	//TRACENODE *left,*right;
+        Ray r;
+        double refrIndex;
+        double multiplier;
+        bool eval;
 
-	TRACENODE(){parent = NULL;}//left=NULL;right=NULL;}
-};
+        int	depth;
+
+        TraceNode *parent = nullptr;
+    };
+}
 
 RTEngine *RTEngine::Instantiate(int width, int height)
 {

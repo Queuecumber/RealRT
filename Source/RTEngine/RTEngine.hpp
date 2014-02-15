@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include <thread>
 #include <mutex>
 #include <vector>
 #include <stack>
@@ -99,11 +100,12 @@ namespace RealRT
         std::vector<Shape> _World;
 
         int _MaxAsyncOperations;
-        std::mutex _WindowMutex;
-        std::mutex _ScreenMutex;
+        std::thread _TracerThreads[];
 
+        std::mutex _WindowMutex;
         std::stack<Window> _WindowStack;
 
+        std::mutex _ScreenMutex;
         int _ScreenWidth, _ScreenHeight;
         unsigned char _Screen[][3];
     };

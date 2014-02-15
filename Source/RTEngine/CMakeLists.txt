@@ -18,6 +18,7 @@ set( RTEngine_SOURCES
     RTEngine.cpp
     Shape.cpp
     Sphere.cpp
+    SphericalLight.cpp
     Material.cpp
     PhongMaterial.cpp
     Vector3D.cpp

@@ -8,7 +8,7 @@ SphericalLight::SphericalLight(const Material &mat, const Vector3D &center, floa
 
 }
 
-bool SphericalLight::IsLight(void)
+bool SphericalLight::IsLight(void) const
 { 
     return true; 
 }

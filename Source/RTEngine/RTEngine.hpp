@@ -18,116 +18,94 @@
 
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
-#include <omp.h>
-#include <windows.h>
+#include <mutex>
 #include <vector>
 #include <stack>
+#include "Vector3D.hpp"
 
-#include <gmath.h>
-using gmath::vector;
-
-
-//Engine includes
-//
-#include "ray.h"
-#include "shape3D.h"
-#include "sphere.h"
-#include "plane3d.h"
-#include "light.h"
-#include "SphereicalLight.h"
-
-//forward declarations
-//
-struct Window;
-struct TRACENODE;
-
-/*
-	class RTEngine
-
-	Facilitates all ray tracing.
-	calculates the scene and renders it to 
-	a given device context
-
-	Only one instance can exist per application
-	and is gotten by calling the class function Instantiate,
-	note that the constructor is private preventing 
-	creation of extra RTEngine objects
-*/
-
-class RTEngine
+namespace RealRT
 {
-public:
-	static const int EYEDEPTH = 5;	//distance from the origion to put the eye point
-	static const int TRACEDEPTH = 6;
-	int DefaultWindowSizeI;
-	int DefaultWindowSizeJ;
-	int SCREENWIDTH;
-	int SCREENHEIGHT;
+    class Ray;
+    class Shape;
+    class Window;
+    class TraceNode;
 
-	~RTEngine(void);
+    /*
+        class RTEngine
 
-	/*
-		RTEngine *Instantiate(int width, int height)
+        Facilitates all ray tracing.
+        calculates the scene and renders it to
+        a given device context
 
-		creates or returns the already existing RTEngine object for this application
-		If the Engine object is created, its virtual screen has dimensions [width][height]
-	*/
-	static RTEngine * _cdecl Instantiate(int width, int height);
-	static RTEngine * _cdecl Instantiate();
+        Only one instance can exist per application
+        and is gotten by calling the class function Instantiate,
+        note that the constructor is private preventing
+        creation of extra RTEngine objects
+    */
 
-	/*
-		CalculateScene
+    class RTEngine
+    {
+    public:
+        static const int EyeDepth = 5;	// Distance from the origin to put the eye point on the Z-axis
+        static const int MaxTraceIterations = 6; // Maximum number of reflection/refractions
 
-		Fills in the virtual screen, ray tracing the scene
-	*/
-	void CalculateScene();
+        ~RTEngine(void);
 
-	void CalculateSceneAsync();
+        /*
+            RTEngine *Instantiate(int width, int height)
 
-	/*
-		Render(HDC hDC)
+            creates or returns the already existing RTEngine object for this application
+            If the Engine object is created, its virtual screen has dimensions [width][height]
+        */
+        static RTEngine &Instantiate(int width = 1024, int height = 768);
 
-		Renders the virtual screen to the parameter passed device context,
-		this should be a memory device context to be used as a backbuffer but
-		can be any device context
-	*/
-	void Render(HDC hDC);
-	
-	/*
-		AddWorldObject(shape3D *obj)
+        /*
+            CalculateScene
 
-		adds the shape pointed to by obj to the world
-	*/
-	void AddWorldObject(shape3D *obj);
+            Fills in the virtual screen, ray tracing the scene
+        */
+        void CalculateScene();
 
-	/*
-		AddWorldObject(shape3D *obj)
+        void CalculateSceneAsync();
 
-		removes the shape pointed to by obj from the world
-	*/
-	void RemoveWorldObject(shape3D *obj);
+        /*
+            AddWorldObject(shape3D *obj)
 
-	void resize(int width, int height);
+            adds the shape pointed to by obj to the world
+        */
+        void AddWorldObject(const Shape &obj);
 
-	friend DWORD WINAPI iterate(LPVOID lpParam);
+        /*
+            AddWorldObject(shape3D *obj)
 
-private:
-	RTEngine(int width,int height);
+            removes the shape pointed to by obj from the world
+        */
+        void RemoveWorldObject(const Shape &obj);
 
-	vector<3,double> recursiveTrace(ray &tracer, int depth, double refrIndex);
-	
-	vector<3,double> iterativeTrace(ray &tracer);
+        int ScreenWidth(void) const;
+        int ScreenHeight(void) const;
 
-	inline bool Absorb(TRACENODE *current);
+        unsigned char *Screen(void) const;
 
-	std::vector<shape3D *> world;
+    private:
+        RTEngine(int width, int height);
 
-	COLORREF **screen;
+        Vector3D _RecursiveTrace(Ray &tracer, int depth, double refrIndex);
 
-	int MAXASYNCOPS;
-	HANDLE StackMutex;
-	HANDLE ScreenMutex;
+        Vector3D _IterativeTrace(Ray &tracer);
 
-	std::stack<Window *> WindowStack;
-};
+        inline bool _Absorb(TraceNode &current);
+
+        std::vector<Shape> _World;
+
+        int _MaxAsyncOperations;
+        std::mutex _WindowMutex;
+        std::mutex _ScreenMutex;
+
+        std::stack<Window> _WindowStack;
+
+        int _ScreenWidth, _ScreenHeight;
+        unsigned char _Screen[][3];
+    };
+
+}

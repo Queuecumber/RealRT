@@ -39,7 +39,7 @@ float Vector3D::K(void) const
     return _K;
 }
 
-Vector3D Vector3D::Add(const Vector3D &v) 
+Vector3D Vector3D::Add(const Vector3D &v) const
 {
     return Vector3D(_I + v._I, _J + v._J, _K + v._K);
 }
@@ -49,7 +49,7 @@ Vector3D Vector3D::Subtract(const Vector3D &v)
     return Vector3D(_I - v._I, _J - v._J, _K - v._K);
 }
 
-Vector3D Vector3D::Normalize(void) 
+Vector3D Vector3D::Normalize(void) const
 { 
     return Scale(1.f / Magnitude()); 
 }
@@ -64,12 +64,12 @@ float Magnitude(void) const
     return std::sqrt(Dot(*this));
 }
 
-Vector3D Vector3D::Scale(float scalar) 
+Vector3D Vector3D::Scale(float scalar) const
 {
     return Vector3D(_I * scalar, _J * scalar, _K * scalar);
 }
 
-Vector3D Vector3D::Clip(float maxVal)
+Vector3D Vector3D::Clip(float maxVal) const
 {
     return Vector3D(_I > maxVal ? maxVal : _I, 
                     _J > maxVal ? maxVal : _J, 

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iostream>
+#include <iosfwd>
+#include <initializer_list>
 
 namespace RealRT
 {
-
     class Vector3D
     {
         public:

@@ -1,5 +1,6 @@
 #include "Vector3D.hpp"
 #include <cmath>
+#include <iostream>
 
 using namespace RealRT;
 

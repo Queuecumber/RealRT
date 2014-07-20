@@ -12,7 +12,7 @@ set( RTEngine_HEADERS
     Vector3D.hpp
 )
 
-set( RTEngine_SOURCES 
+set( RTEngine_SOURCES
     Plane.cpp
     Ray.cpp
     RTEngine.cpp
@@ -22,7 +22,7 @@ set( RTEngine_SOURCES
     Material.cpp
     PhongMaterial.cpp
     Vector3D.cpp
-) 
+)
 
 add_library(RTEngine SHARED ${RTEngine_HEADERS} ${RTEngine_SOURCES})
 

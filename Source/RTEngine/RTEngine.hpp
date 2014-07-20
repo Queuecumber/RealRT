@@ -49,6 +49,8 @@ namespace RealRT
     public:
         static const int EyeDepth = 5;	// Distance from the origin to put the eye point on the Z-axis
         static const int MaxTraceIterations = 6; // Maximum number of reflection/refractions
+        static const int LogicalWidth = 20;
+        static const int LogicalHeight = 20;
 
         ~RTEngine(void);
 
@@ -74,14 +76,14 @@ namespace RealRT
 
             adds the shape pointed to by obj to the world
         */
-        void AddWorldObject(const Shape &obj);
+        void AddWorldObject(std::shared_ptr<Shape> obj);
 
         /*
             AddWorldObject(shape3D *obj)
 
             removes the shape pointed to by obj from the world
         */
-        void RemoveWorldObject(const Shape &obj);
+        void RemoveWorldObject(std::shared_ptr<Shape> obj);
 
         int ScreenWidth(void) const;
         int ScreenHeight(void) const;
@@ -91,13 +93,15 @@ namespace RealRT
     private:
         RTEngine(int width, int height);
 
-        Vector3D _RecursiveTrace(Ray &tracer, int depth, double refrIndex);
+        Vector3D _RecursiveTrace(Ray &tracer, int depth, float refrIndex);
 
         Vector3D _IterativeTrace(Ray &tracer);
 
         inline bool _Absorb(TraceNode &current);
 
-        std::vector<Shape> _World;
+        inline void _ScreenToLogical(const int i, const int j, float &x, float &y) const;
+
+        std::list<std::shared_ptr<Shape>> _World;
 
         int _MaxAsyncOperations;
         std::thread _TracerThreads[];
@@ -107,7 +111,7 @@ namespace RealRT
 
         std::mutex _ScreenMutex;
         int _ScreenWidth, _ScreenHeight;
-        unsigned char _Screen[][3];
+        std::unique_ptr<unsigned char[]> _Screen;
     };
 
 }

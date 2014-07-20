@@ -3,7 +3,7 @@
 
 using namespace RealRT;
 
-Plane::Plane(const Material &mat, const Vector3D &normal, float d)
+Plane::Plane(std::shared_ptr<const Material> mat, const Vector3D &normal, float d)
     : Shape(mat)
     , _Normal(normal)
     , _D(d)
@@ -35,4 +35,3 @@ bool Plane::IsLight(void) const
 {
     return false;
 }
-

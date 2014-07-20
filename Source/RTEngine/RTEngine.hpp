@@ -20,7 +20,7 @@
 
 #include <thread>
 #include <mutex>
-#include <vector>
+#include <list>
 #include <stack>
 #include "Vector3D.hpp"
 
@@ -60,7 +60,7 @@ namespace RealRT
             creates or returns the already existing RTEngine object for this application
             If the Engine object is created, its virtual screen has dimensions [width][height]
         */
-        static RTEngine &Instantiate(int width = 1024, int height = 768);
+        static std::shared_ptr<RTEngine> Instantiate(int width = 1024, int height = 768);
 
         /*
             CalculateScene
@@ -93,7 +93,9 @@ namespace RealRT
     private:
         RTEngine(int width, int height);
 
-        Vector3D _RecursiveTrace(Ray &tracer, int depth, float refrIndex);
+        void _Resize(int width, int height);
+
+        Vector3D _RecursiveTrace(const Ray &tracer, const int depth, const double refrIndex) const;
 
         Vector3D _IterativeTrace(Ray &tracer);
 
@@ -112,6 +114,8 @@ namespace RealRT
         std::mutex _ScreenMutex;
         int _ScreenWidth, _ScreenHeight;
         std::unique_ptr<unsigned char[]> _Screen;
+
+        static std::shared_ptr<RTEngine> _Instance;
     };
 
 }

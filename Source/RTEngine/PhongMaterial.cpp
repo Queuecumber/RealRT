@@ -21,9 +21,9 @@ float PhongMaterial::BidirectionReflectanceDistributionFunction(const Vector3D &
     //
     if(dot > 0)
     {
-        if(DiffuseScaler() > 0)
+        if(DiffuseScalar() > 0)
         {
-            ratio += dot * DiffuseScaler();
+            ratio += dot * DiffuseScalar();
         }
     }
 
@@ -33,9 +33,9 @@ float PhongMaterial::BidirectionReflectanceDistributionFunction(const Vector3D &
 
     if(dot > 0)
     {
-        if(SpecularScaler() > 0)
+        if(SpecularScalar() > 0)
         {
-            ratio += pow(dot,50) * SpecularScaler();
+            ratio += pow(dot,50) * SpecularScalar();
         }
     }
 

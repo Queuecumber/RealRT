@@ -1,9 +1,11 @@
 #include "Sphere.hpp"
 #include "Vector3D.hpp"
+#include "Ray.hpp"
+#include <cmath>
 
 using namespace RealRT;
 
-Sphere::Sphere(const Material &mat, const Vector3D &center, float radius)
+Sphere::Sphere(std::shared_ptr<const Material> mat, const Vector3D &center, float radius)
     : Shape(mat)
     , _Center(center)
     , _Radius(radius)
@@ -26,7 +28,7 @@ float Sphere::Intersect(const Ray &incident, bool &flipNormals) const
     Vector3D vec;
     vec = incident.Origin() - _Center;
 
-	//the direction std::vector doted against the position std::vector of the center of the sphere is b 
+	//the direction std::vector doted against the position std::vector of the center of the sphere is b
     float b = -(vec * incident.Direction());
 
 	//c is the magnitude squared of the center position std::vector, minus the
@@ -37,7 +39,7 @@ float Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 	float det = (b * b) - c;
 
 	if(det == 0)
-		return b; 
+		return b;
 
 	//begin distance calculation
 	//
@@ -46,7 +48,7 @@ float Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 	{
 		//calculate both distances
 		//
-		det = sqrt(det);
+		det = std::sqrt(det);
 		float i1 = b - det;
 		float i2 = b + det;
 
@@ -54,22 +56,22 @@ float Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 		//must be negative and the object is behind the screen
 		if(i2 > 0)
 		{
-			//if i2 is positve and i1 is negative, we are inside the sphere and the closent point of intersection 
+			//if i2 is positve and i1 is negative, we are inside the sphere and the closent point of intersection
 			//is i2
 			if(i1 < 0)
 			{
 				retval = i2;
-				flipnormals = true;
+				flipNormals = true;
 			}
 			else
 			{
 				//otherwise, i1 is the closest point and the entire sphere is in front of the screen
 				retval = i1;
-				flipnormals = false;
+				flipNormals = false;
 			}
 		}
 	}
-	
+
 	return retval;
 }
 
@@ -77,9 +79,9 @@ float Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 
 Vector3D Sphere::Normal(const Vector3D &pt) const
 {
-	//the normal to a point on the sphere is the vector along the radius, begining at the center and ending at the 
+	//the normal to a point on the sphere is the vector along the radius, begining at the center and ending at the
 	//given point. Dividing by the radius makes this a unit vector
-	Vector3D norm = (pt - cen) * rad;
+	Vector3D norm = (pt - _Center).Normalize();
 
 	return norm;
 }

@@ -1,9 +1,10 @@
 #include "RTEngine.hpp"
+#include "Ray.hpp"
+#include "Shape.hpp"
+#include "Material.hpp"
+#include "Sphere.hpp"
 #include <iostream>
 #include <algorithm>
-
-
-static RTEngine *instance = NULL;	//pointer to the only instance of RTEngine
 
 namespace RealRT
 {
@@ -52,35 +53,34 @@ namespace RealRT
     };
 }
 
-RTEngine *RTEngine::Instantiate(int width, int height)
+using namespace RealRT;
+
+std::shared_ptr<RTEngine> RTEngine::Instantiate(int width, int height)
 {
 	//before instantiation, make sure there isnt already one
 	//
-	if(!instance)
+	if(_Instance == nullptr)
 	{
-		instance = new RTEngine(width, height);
+		_Instance.reset(new RTEngine(width, height));
 	}
 	else
 	{
-		if(width != instance->_ScreenWidth)
+		if(width != _Instance->_ScreenWidth)
 		{
-			instance->resize(width,height);
+			_Instance->_Resize(width,height);
 		}
 	}
 
-	return instance;
+	return _Instance;
 }
 
 RTEngine::RTEngine(int width,int height)
-	: _ScreenWidth(width), _ScreenHeight(height), _MaxAsyncOperations(4)
+	: _MaxAsyncOperations(4)
 {
-	//create the virtual screen
-	//
-	_Screen.reset(new unsigned char[width * height * 3]);
-    std::fill(_Screen.get(), _Screen.get() + (width * height), 0);
+	_Resize(width, height);
 }
 
-void RTEngine::_ScreenToLogical(const int i, const int j, float &x, float &y)
+void RTEngine::_ScreenToLogical(const int i, const int j, float &x, float &y) const
 {
     float widthScalar = float(LogicalWidth) / float(_ScreenWidth);
     float heightScalar = float(LogicalHeight) / float(_ScreenHeight);
@@ -100,14 +100,14 @@ void RTEngine::CalculateScene()
 			float x, y;
             _ScreenToLogical(i, j, x, y);
 
-            Vector3D screenPos = {x, y, 0.f};
+            Vector3D screenPosition = {x, y, 0.f};
 
             Ray tracer(eyeLoc, screenPosition - eyeLoc);
 
 			Vector3D pixelColor = _RecursiveTrace(tracer, 0, 1.f);
 			//vector<3,double> v3dColor = iterativeTrace(ray(v3dEyeLoc,(v3dScreenPos - v3dEyeLoc).normalize()));
 
-			Vector3D supressedColor = pixelColor.Clip(1.f);
+			Vector3D suppressedColor = pixelColor.Clip(1.f);
 
 			int red = suppressedColor.I() * 255;
             int green = suppressedColor.J() * 255;
@@ -159,7 +159,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
         Vector3D unitNormal = closest->Normal(intersectPoint);
 
         // Get the material of the shape
-        Material shapeMat = closest->SurfaceMaterial();
+        std::shared_ptr<const Material> shapeMat = closest->SurfaceMaterial();
 
         //traverse the world again looking for lights
         //
@@ -196,17 +196,17 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
                 {
                     //apply lighting function
                     //
-                    double radianceDist = shapeMat.BidirectionReflectanceDistributionFunction(tracer.Direction(), toLight, unitNormal);
+                    double radianceDist = shapeMat->BidirectionReflectanceDistributionFunction(tracer.Direction(), toLight, unitNormal);
 
-                    Material lightMat = l->SurfaceMateral();
-                    compositeColor += shapeMat.Color().Weight(lightMat.Color() * radianceDist * occlusion);
+                    std::shared_ptr<const Material> lightMat = l->SurfaceMaterial();
+                    compositeColor += shapeMat->Color().Weight(lightMat->Color() * radianceDist * occlusion);
                 }
             }
         }
 
         //apply reflections
         //
-        double refl = shapeMat.Reflectance();
+        double refl = shapeMat->Reflectance();
         double refr = shapeMat->Refractance();
         double rindex = shapeMat->IndexOfRefraction();
 
@@ -219,7 +219,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 
             Vector3D reflCol = _RecursiveTrace(reflected, depth + 1, refrIndex);
 
-            compositeColor += reflCol.Weight(refl * shapeMat.Color());
+            compositeColor += reflCol.Weight(refl * shapeMat->Color());
         }
 
         //apply refractions
@@ -240,7 +240,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 
                 Vector3D refrCol = _RecursiveTrace(refracted, depth + 1, rindex);
 
-                compositeColor += refrCol.Weight(refr * shapeMat.Color());
+                compositeColor += refrCol.Weight(refr * shapeMat->Color());
             }
         }
     }
@@ -626,7 +626,7 @@ void RTEngine::RemoveWorldObject(std::shared_ptr<Shape> obj)
 	_World.remove(obj);
 }
 
-void RTEngine::resize(int width, int height)
+void RTEngine::_Resize(int width, int height)
 {
 	_ScreenHeight = height;
 	_ScreenWidth = width;

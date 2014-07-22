@@ -226,6 +226,10 @@ namespace RealRT
         is >> i >> j >> k;
         is.ignore(1, ']');
 
+        obj._I = i;
+        obj._J = j;
+        obj._K = k;
+
         return is;
     }
 }

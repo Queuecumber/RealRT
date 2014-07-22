@@ -172,16 +172,6 @@ Vector3D &Vector3D::operator -=(const Vector3D &rhs)
     return *this;
 }
 
-Vector3D operator *(float scalar, const Vector3D &v)
-{
-    return v.Scale(scalar);
-}
-
-Vector3D operator *(const Vector3D &v, float scalar)
-{
-    return v.Scale(scalar);
-}
-
 float Vector3D::operator *(const Vector3D &rhs) const
 {
     return this->Dot(rhs);
@@ -212,6 +202,16 @@ Vector3D &Vector3D::operator %=(const Vector3D &rhs)
 
 namespace RealRT
 {
+    Vector3D operator *(float scalar, const Vector3D &v)
+    {
+        return v.Scale(scalar);
+    }
+
+    Vector3D operator *(const Vector3D &v, float scalar)
+    {
+        return v.Scale(scalar);
+    }
+
     std::ostream &operator<<(std::ostream &os, const Vector3D &obj)
     {
         os << "[" << obj._I << " " << obj._J << " " << obj._K << "]";

@@ -2,6 +2,7 @@
 
 #include <iosfwd>
 #include <initializer_list>
+#include <array>
 
 namespace RealRT
 {
@@ -12,7 +13,7 @@ namespace RealRT
 
             Vector3D(float i, float j, float k);
 
-            explicit Vector3D(const float *values);
+            explicit Vector3D(const std::array<float, 3> values);
 
             Vector3D(std::initializer_list<float> list);
 

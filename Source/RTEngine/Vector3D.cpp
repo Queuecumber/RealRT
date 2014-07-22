@@ -12,7 +12,7 @@ Vector3D::Vector3D(float i, float j, float k)
     _K = k;
 }
 
-Vector3D::Vector3D(const float *values)
+Vector3D::Vector3D(const std::array<float, 3> values)
 {
     _I = values[0];
     _J = values[1];

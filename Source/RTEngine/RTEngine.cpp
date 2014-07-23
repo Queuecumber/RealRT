@@ -632,7 +632,7 @@ void RTEngine::_Resize(int width, int height)
 	_ScreenWidth = width;
 
 	_Screen.reset(new unsigned char[width * height * 3]);
-    std::fill(_Screen.get(), _Screen.get() + (width * height), 0);
+    std::fill(_Screen.get(), _Screen.get() + (width * height * 3), 0);
 }
 
 

@@ -82,13 +82,13 @@ RTEngine::RTEngine(int width,int height)
 	_Resize(width, height);
 }
 
-void RTEngine::_ScreenToLogical(const int i, const int j, float &x, float &y) const
+void RTEngine::_ScreenToLogical(const int i, const int j, double &x, double &y) const
 {
-    double widthScalar = _LogicalWidth / float(_ScreenWidth);
-    double heightScalar = _LogicalHeight / float(_ScreenHeight);
+    double widthScalar = _LogicalWidth / double(_ScreenWidth);
+    double heightScalar = _LogicalHeight / double(_ScreenHeight);
 
-    x = (i * widthScalar) - (_LogicalWidth / 2.f);
-    y = -((j * heightScalar) - (_LogicalHeight / 2.f));
+    x = (i * widthScalar) - (_LogicalWidth / 2.0);
+    y = -((j * heightScalar) - (_LogicalHeight / 2.0));
 }
 
 unsigned char *RTEngine::Screen(void) const
@@ -104,17 +104,17 @@ void RTEngine::CalculateScene()
 	{
 		for(int i = 0; i < _ScreenWidth; i++)
 		{
-			float x, y;
+			double x, y;
             _ScreenToLogical(i, j, x, y);
 
-            Vector3D screenPosition = {x, y, 0.f};
+            Vector3D screenPosition = {x, y, 0.0};
 
             Ray tracer(eyeLoc, screenPosition - eyeLoc);
 
-			Vector3D pixelColor = _RecursiveTrace(tracer, 0, 1.f);
+			Vector3D pixelColor = _RecursiveTrace(tracer, 0, 1.0);
 			//vector<3,double> v3dColor = iterativeTrace(ray(v3dEyeLoc,(v3dScreenPos - v3dEyeLoc).normalize()));
 
-			Vector3D suppressedColor = pixelColor.Clip(1.f);
+			Vector3D suppressedColor = pixelColor.Clip(1.0);
 
 			int red = suppressedColor.I() * 255;
             int green = suppressedColor.J() * 255;
@@ -155,7 +155,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 
     //if the current world object is a light, do not apply shading
     //
-    Vector3D compositeColor = {0.f, 0.f, 0.f};
+    Vector3D compositeColor = {0.0, 0.0, 0.0};
     if(!closest->IsLight())
     {
         //calculate the position vector of the point of intersection using the line along the current ray
@@ -259,8 +259,8 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 // {
 // 	//calculate ideal window sizes
 // 	//
-// 	DefaultWindowSizeI = SCREENWIDTH  / (int)(sqrt( float(MAXASYNCOPS) ));
-// 	DefaultWindowSizeJ = SCREENHEIGHT / (int)(sqrt( float(MAXASYNCOPS) ));
+// 	DefaultWindowSizeI = SCREENWIDTH  / (int)(sqrt( double(MAXASYNCOPS) ));
+// 	DefaultWindowSizeJ = SCREENHEIGHT / (int)(sqrt( double(MAXASYNCOPS) ));
 //
 // 	//Partition window and make window stack
 // 	//
@@ -643,15 +643,15 @@ void RTEngine::_Resize(int width, int height)
 
     if(width < height)
     {
-        float aspectRatio = float(height) / float(width);
+        double aspectRatio = double(height) / double(width);
         _LogicalWidth = LogicalSpaceSize;
-        _LogicalHeight = aspectRatio * float(_LogicalWidth);
+        _LogicalHeight = aspectRatio * double(_LogicalWidth);
     }
     else
     {
-        float aspectRatio = float(width) / float(height);
+        double aspectRatio = double(width) / double(height);
         _LogicalHeight = LogicalSpaceSize;
-        _LogicalWidth = aspectRatio * float(_LogicalHeight);
+        _LogicalWidth = aspectRatio * double(_LogicalHeight);
     }
 }
 

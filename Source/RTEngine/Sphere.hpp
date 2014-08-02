@@ -9,18 +9,18 @@ namespace RealRT
     class Sphere : public Shape
     {
 		public:
-		    Sphere(std::shared_ptr<const Material> mat, const Vector3D &center = {0.f, 0.f, 0.f}, float radius = 2.5f);
+		    Sphere(std::shared_ptr<const Material> mat, const Vector3D &center = {0.0, 0.0, 0.0}, double radius = 2.5);
 		    ~Sphere(void) = default;
 
-		    float Intersect(const Ray &incident, bool &flipNormals) const;
+		    double Intersect(const Ray &incident, bool &flipNormals) const;
 		    Vector3D Normal(const Vector3D &pt) const;
 
-		    float Radius(void) const;
+		    double Radius(void) const;
 		    Vector3D Center(void) const;
 
 		private:
 		    Vector3D _Center;
-		    float _Radius;
+		    double _Radius;
     };
 
 }

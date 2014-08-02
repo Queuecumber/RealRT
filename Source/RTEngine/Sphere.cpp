@@ -5,7 +5,7 @@
 
 using namespace RealRT;
 
-Sphere::Sphere(std::shared_ptr<const Material> mat, const Vector3D &center, float radius)
+Sphere::Sphere(std::shared_ptr<const Material> mat, const Vector3D &center, double radius)
     : Shape(mat)
     , _Center(center)
     , _Radius(radius)
@@ -13,7 +13,7 @@ Sphere::Sphere(std::shared_ptr<const Material> mat, const Vector3D &center, floa
 
 }
 
-float Sphere::Radius(void) const
+double Sphere::Radius(void) const
 {
     return _Radius;
 }
@@ -23,34 +23,34 @@ Vector3D Sphere::Center(void) const
     return _Center;
 }
 
-float Sphere::Intersect(const Ray &incident, bool &flipNormals) const
+double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 {
     Vector3D vec;
     vec = incident.Origin() - _Center;
 
 	//the direction std::vector doted against the position std::vector of the center of the sphere is b
-    float b = -(vec * incident.Direction());
+    double b = -(vec * incident.Direction());
 
 	//c is the magnitude squared of the center position std::vector, minus the
 	//radius squared
-    float c = vec*vec - (_Radius * _Radius);
+    double c = vec*vec - (_Radius * _Radius);
 
 	//calculate the determinant
-	float det = (b * b) - c;
+	double det = (b * b) - c;
 
 	if(det == 0)
 		return b;
 
 	//begin distance calculation
 	//
-	float retval = 0;
+	double retval = 0;
 	if(det > 0)
 	{
 		//calculate both distances
 		//
 		det = std::sqrt(det);
-		float i1 = b - det;
-		float i2 = b + det;
+		double i1 = b - det;
+		double i2 = b + det;
 
 		//see if the greater distance value (i2) is positive, if it isnt, then the other distance
 		//must be negative and the object is behind the screen

@@ -16,7 +16,7 @@ namespace RealRT
 
         private:
             Vector3D _Origin;
-            Vector3D _Direction = {0.f, 0.f, 1.f};
+            Vector3D _Direction = {0.0, 0.0, 1.0};
     };
 
 }

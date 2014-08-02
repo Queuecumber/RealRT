@@ -100,7 +100,7 @@ namespace RealRT
 
         inline bool _Absorb(TraceNode &current);
 
-        inline void _ScreenToLogical(const int i, const int j, float &x, float &y) const;
+        inline void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
 
         std::list<std::shared_ptr<Shape>> _World;
 

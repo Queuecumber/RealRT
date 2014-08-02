@@ -2,7 +2,7 @@
 
 using namespace RealRT;
 
-Material::Material(const Vector3D &color, float reflectance, float refractance, float indexOfRefraction, float diffuseScalar, float specularScalar)
+Material::Material(const Vector3D &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar)
     : _Color(color)
     , _Reflectance(reflectance)
     , _Refractance(refractance)
@@ -29,27 +29,27 @@ Vector3D Material::Color(void) const
     return _Color;
 }
 
-float Material::Reflectance(void) const
+double Material::Reflectance(void) const
 {
     return _Reflectance;
 }
 
-float Material::Refractance(void) const
+double Material::Refractance(void) const
 {
     return _Refractance;
 }
 
-float Material::IndexOfRefraction(void) const
+double Material::IndexOfRefraction(void) const
 {
     return _IndexOfRefraction;
 }
 
-float Material::DiffuseScalar(void) const
+double Material::DiffuseScalar(void) const
 {
     return _DiffuseScalar;
 }
 
-float Material::SpecularScalar(void) const
+double Material::SpecularScalar(void) const
 {
     return _SpecularScalar;
 }

@@ -9,34 +9,34 @@ namespace RealRT
     {
         public:
 
-            Material(const Vector3D &color, float reflectance, float refractance, float indexOfRefraction, float diffuseScalar, float specularScalar);
+            Material(const Vector3D &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar);
             Material(const Material &cp);
 
 
-            virtual float BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const = 0;
+            virtual double BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const = 0;
 
             Vector3D Color(void) const;
 
-            float Reflectance(void) const;
+            double Reflectance(void) const;
 
-            float Refractance(void) const;
+            double Refractance(void) const;
 
-            float IndexOfRefraction(void) const;
+            double IndexOfRefraction(void) const;
 
-            float DiffuseScalar(void) const;
+            double DiffuseScalar(void) const;
 
-            float SpecularScalar(void) const;
+            double SpecularScalar(void) const;
 
         private:
 
             Vector3D _Color;
 
-            float _Reflectance;
-            float _Refractance;
-            float _IndexOfRefraction;
+            double _Reflectance;
+            double _Refractance;
+            double _IndexOfRefraction;
 
-            float _DiffuseScalar;
-            float _SpecularScalar;
+            double _DiffuseScalar;
+            double _SpecularScalar;
     };
 
 }

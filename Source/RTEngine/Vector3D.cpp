@@ -5,38 +5,38 @@
 
 using namespace RealRT;
 
-Vector3D::Vector3D(float i, float j, float k)
+Vector3D::Vector3D(double i, double j, double k)
 {
     _I = i;
     _J = j;
     _K = k;
 }
 
-Vector3D::Vector3D(const std::array<float, 3> values)
+Vector3D::Vector3D(const std::array<double, 3> values)
 {
     _I = values[0];
     _J = values[1];
     _K = values[2];
 }
 
-Vector3D::Vector3D(std::initializer_list<float> list)
+Vector3D::Vector3D(std::initializer_list<double> list)
 {
     _I = list.begin()[0];
     _J = list.begin()[1];
     _K = list.begin()[2];
 }
 
-float Vector3D::I(void) const
+double Vector3D::I(void) const
 {
     return _I;
 }
 
-float Vector3D::J(void) const
+double Vector3D::J(void) const
 {
     return _J;
 }
 
-float Vector3D::K(void) const
+double Vector3D::K(void) const
 {
     return _K;
 }
@@ -53,25 +53,25 @@ Vector3D Vector3D::Subtract(const Vector3D &v) const
 
 Vector3D Vector3D::Normalize(void) const
 {
-    return Scale(1.f / Magnitude());
+    return Scale(1.0 / Magnitude());
 }
 
-float Vector3D::Distance(const Vector3D &rhs) const
+double Vector3D::Distance(const Vector3D &rhs) const
 {
     return std::sqrt(this->Dot(*this - rhs));
 }
 
-float Vector3D::Magnitude(void) const
+double Vector3D::Magnitude(void) const
 {
     return std::sqrt(Dot(*this));
 }
 
-Vector3D Vector3D::Scale(float scalar) const
+Vector3D Vector3D::Scale(double scalar) const
 {
     return Vector3D(_I * scalar, _J * scalar, _K * scalar);
 }
 
-Vector3D Vector3D::Clip(float maxVal) const
+Vector3D Vector3D::Clip(double maxVal) const
 {
     return Vector3D(_I > maxVal ? maxVal : _I,
                     _J > maxVal ? maxVal : _J,
@@ -83,7 +83,7 @@ Vector3D Vector3D::Weight(const Vector3D &rhs) const
     return Vector3D(_I * rhs._I, _J * rhs._J, _K * rhs._K);
 }
 
-float Vector3D::Dot(const Vector3D &rhs) const
+double Vector3D::Dot(const Vector3D &rhs) const
 {
     return (_I * rhs._I) + (_J * rhs._J) + (_K * rhs._K);
 }
@@ -96,7 +96,7 @@ Vector3D Vector3D::Cross(const Vector3D &rhs) const
        (_I * rhs._J) - (rhs._I * _J) );
 }
 
-float Vector3D::operator [](int i) const
+double Vector3D::operator [](int i) const
 {
     switch(i)
     {
@@ -172,12 +172,12 @@ Vector3D &Vector3D::operator -=(const Vector3D &rhs)
     return *this;
 }
 
-float Vector3D::operator *(const Vector3D &rhs) const
+double Vector3D::operator *(const Vector3D &rhs) const
 {
     return this->Dot(rhs);
 }
 
-Vector3D &Vector3D::operator *=(float scalar)
+Vector3D &Vector3D::operator *=(double scalar)
 {
     _I *= scalar;
     _J *= scalar;
@@ -202,12 +202,12 @@ Vector3D &Vector3D::operator %=(const Vector3D &rhs)
 
 namespace RealRT
 {
-    Vector3D operator *(float scalar, const Vector3D &v)
+    Vector3D operator *(double scalar, const Vector3D &v)
     {
         return v.Scale(scalar);
     }
 
-    Vector3D operator *(const Vector3D &v, float scalar)
+    Vector3D operator *(const Vector3D &v, double scalar)
     {
         return v.Scale(scalar);
     }
@@ -220,7 +220,7 @@ namespace RealRT
 
     std::istream &operator>>(std::istream &is, Vector3D &obj)
     {
-        float i, j, k;
+        double i, j, k;
 
         is.ignore(1, '[');
         is >> i >> j >> k;

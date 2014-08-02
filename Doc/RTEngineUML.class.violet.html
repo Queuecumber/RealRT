@@ -43,7 +43,7 @@
         <text>- Material : Material</text>
       </attributes>
       <methods id="11" justification="0" size="4" underlined="false">
-        <text>+ Intersect(incident : Ray, flipnormals : bool) : float
+        <text>+ Intersect(incident : Ray, flipnormals : bool) : double
 + Normal(pos : Vector3D) : Vector3D
 + IsLight() : bool
 + SurfaceMaterial() : Material</text>
@@ -62,11 +62,11 @@
       </name>
       <attributes id="17" justification="0" size="4" underlined="false">
         <text>- Center : Vector3D
-- Radius : float</text>
+- Radius : double</text>
       </attributes>
       <methods id="18" justification="0" size="4" underlined="false">
         <text>+ Center : Vector3D
-+ Radius : float</text>
++ Radius : double</text>
       </methods>
     </ClassNode>
     <ClassNode id="19">
@@ -82,7 +82,7 @@
       </name>
       <attributes id="24" justification="0" size="4" underlined="false">
         <text>Normal : Vector3D
-D : float</text>
+D : double</text>
       </attributes>
       <methods id="25" justification="0" size="4" underlined="false">
         <text></text>
@@ -156,25 +156,25 @@ D : float</text>
         <text>Vector3D</text>
       </name>
       <attributes id="52" justification="0" size="4" underlined="false">
-        <text>- I : float
-- J : float
-- K : float</text>
+        <text>- I : double
+- J : double
+- K : double</text>
       </attributes>
       <methods id="53" justification="0" size="4" underlined="false">
-        <text>+ I() : float
-+ J() : float
-+ K() : float
+        <text>+ I() : double
++ J() : double
++ K() : double
 + Add(v : Vector3D) : Vector3D
 + Subtract(v : Vector3D) : Vector3D
 + Normalize() : Vector3D
 + Distance(v : Vector3D) : Vector3D
-+ Magnitude() : float
-+ Scale(v : float) Vector3D
-+ Clip(v : float) : Vector3D
++ Magnitude() : double
++ Scale(v : double) Vector3D
++ Clip(v : double) : Vector3D
 + Weight(v : Vector3D) : Vector3D
 + Dot(v: Vector3D) : Vector3D
 + Cross(v : Vector3D) : Vector3D
-+ operator [](i : int) : float
++ operator [](i : int) : double
 + operator ==(v : Vector3D) : bool
 + operator !=(v : Vector3D) : bool
 + operator &lt;(v : Vector3D) : bool
@@ -185,10 +185,10 @@ D : float</text>
 + operator -(v: Vector3D) : Vector3D
 + operator +=(v: Vector3D) : Vector3D 
 + operator -=(v: Vector3D) : Vector3D
-+ friend operator *(scalar : float, v : Vector3D) : Vector3D
-+ friend operator *(v : Vector3D, scalar : float) : Vector3D
-+ operator *(v : Vector3D) : float
-+ operator *=(scalar: float) : Vector3D
++ friend operator *(scalar : double, v : Vector3D) : Vector3D
++ friend operator *(v : Vector3D, scalar : double) : Vector3D
++ operator *(v : Vector3D) : double
++ operator *=(scalar: double) : Vector3D
 + operator %(v: Vector3D) : Vector3D
 + operator %=(v : Vector3D) : Vector3D
 + friend operator &lt;&lt;(os : std::ostream, v : Vector3D) : std::ostream
@@ -229,7 +229,7 @@ D : float</text>
 + ScreenWidth() : int
 + ScreenHeight() : int
 + Screen() : unsigned char[0..*]
-- RecursiveTrace(tracer : Ray, depth : int, refrIndex : float) : Vector3D
+- RecursiveTrace(tracer : Ray, depth : int, refrIndex : double) : Vector3D
 - IterativeTrace(tracer : Ray) : Vector3D
 - Absorb(current : TraceNode) : bool</text>
       </methods>
@@ -270,8 +270,8 @@ D : float</text>
         <text>+ Color : Vector3D
 + ShapeColor : Vector3D
 + R : Ray
-+ RefrIndex : float
-+ Multiplier : float
++ RefrIndex : double
++ Multiplier : double
 +Eval : bool
 + Depth : int
 + Parent : TraceNode</text>
@@ -293,19 +293,19 @@ D : float</text>
       </name>
       <attributes id="80" justification="0" size="4" underlined="false">
         <text>- Color : Vector3D
-- Reflectance : float
-- Refractance : float
-- IndexOfRefraction : float
-- DiffuseScalar : float
-- SpecularScalar : float</text>
+- Reflectance : double
+- Refractance : double
+- IndexOfRefraction : double
+- DiffuseScalar : double
+- SpecularScalar : double</text>
       </attributes>
       <methods id="81" justification="0" size="4" underlined="false">
         <text>+ Color() : Vector3D
-+ Reflectance() : float
-+ Refractance() : float
-+ IndexOfRefraction() : float
-+ DiffuseScalar() : float
-+ SpecularScalar() : float
++ Reflectance() : double
++ Refractance() : double
++ IndexOfRefraction() : double
++ DiffuseScalar() : double
++ SpecularScalar() : double
 + BidirectionReflectanceDistributionFunction</text>
       </methods>
     </ClassNode>

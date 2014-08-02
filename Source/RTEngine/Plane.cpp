@@ -3,7 +3,7 @@
 
 using namespace RealRT;
 
-Plane::Plane(std::shared_ptr<const Material> mat, const Vector3D &normal, float d)
+Plane::Plane(std::shared_ptr<const Material> mat, const Vector3D &normal, double d)
     : Shape(mat)
     , _Normal(normal)
     , _D(d)
@@ -16,14 +16,14 @@ Vector3D Plane::Normal(const Vector3D &pt) const
     return _Normal;
 }
 
-float Plane::Intersect(const Ray &incident, bool &flipNormals) const
+double Plane::Intersect(const Ray &incident, bool &flipNormals) const
 {
     flipNormals = false;
 
-    float det = _Normal * incident.Direction();
+    double det = _Normal * incident.Direction();
 	if(det != 0)
 	{
-        float dist = -(_Normal * incident.Origin() + _D) / det;
+        double dist = -(_Normal * incident.Origin() + _D) / det;
 		if(dist > 0)
 			return dist;
 	}

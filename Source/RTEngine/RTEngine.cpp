@@ -228,7 +228,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 
             Vector3D reflCol = _RecursiveTrace(reflected, depth + 1, refrIndex);
 
-            compositeColor += reflCol.Weight(refl * shapeMat->Color());
+            compositeColor += shapeMat->Color().Weight(refl * reflCol);
         }
 
         //apply refractions
@@ -249,7 +249,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 
                 Vector3D refrCol = _RecursiveTrace(refracted, depth + 1, rindex);
 
-                compositeColor += refrCol.Weight(refr * shapeMat->Color());
+                compositeColor += shapeMat->Color().Weight(refr * refrCol);
             }
         }
     }

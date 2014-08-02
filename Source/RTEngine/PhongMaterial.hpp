@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Material.hpp"
+#include <memory>
 
 namespace RealRT
 {
@@ -15,24 +16,24 @@ namespace RealRT
     };
 
     //some material definitions
-    const PhongMaterial DiffuseRed(Vector3D(0.9f,0.1f,0.1f),0.1f,0.0f,0.0f,0.9f,0.2f);
-    const PhongMaterial DiffuseGreen(Vector3D(0.1f,0.9f,0.1f),0.1f,0.0f,0.0f,0.9f,0.2f);
-    const PhongMaterial DiffuseBlue(Vector3D(0.1f,0.1f,0.9f),0.1f,0.0f,0.0f,0.9f,0.2f);
+    const std::shared_ptr<Material> DiffuseRed = std::make_shared<PhongMaterial>(Vector3D(0.9f,0.1f,0.1f),0.1f,0.0f,0.0f,0.9f,0.2f);
+    const std::shared_ptr<Material> DiffuseGreen = std::make_shared<PhongMaterial>(Vector3D(0.1f,0.9f,0.1f),0.1f,0.0f,0.0f,0.9f,0.2f);
+    const std::shared_ptr<Material> DiffuseBlue = std::make_shared<PhongMaterial>(Vector3D(0.1f,0.1f,0.9f),0.1f,0.0f,0.0f,0.9f,0.2f);
 
-    const PhongMaterial ReflectiveRed(Vector3D(0.9f,0.1f,0.1f),0.9f,0.0f,0.0f,0.1f,0.9f);
-    const PhongMaterial ReflectiveGreen(Vector3D(0.1f,0.9f,0.1f),0.9f,0.0f,0.0f,0.1f,0.9f);
-    const PhongMaterial ReflectiveBlue(Vector3D(0.1f,0.1f,0.9f),0.9f,0.0f,0.0f,0.1f,0.9f);
+    const std::shared_ptr<Material> ReflectiveRed = std::make_shared<PhongMaterial>(Vector3D(0.9f,0.1f,0.1f),0.9f,0.0f,0.0f,0.1f,0.9f);
+    const std::shared_ptr<Material> ReflectiveGreen = std::make_shared<PhongMaterial>(Vector3D(0.1f,0.9f,0.1f),0.9f,0.0f,0.0f,0.1f,0.9f);
+    const std::shared_ptr<Material> ReflectiveBlue = std::make_shared<PhongMaterial>(Vector3D(0.1f,0.1f,0.9f),0.9f,0.0f,0.0f,0.1f,0.9f);
 
-    const PhongMaterial Mirror(Vector3D(1.0f,1.0f,1.0f),0.9f,0.0f,0.0f,0.1f,0.9f);
+    const std::shared_ptr<Material> Mirror = std::make_shared<PhongMaterial>(Vector3D(1.0f,1.0f,1.0f),0.9f,0.0f,0.0f,0.1f,0.9f);
 
-    const PhongMaterial TranslucentGreen(Vector3D(0.1f,0.9f,0.2f),0.5f,0.0f,0.0f,0.1f,0.9f);
-    const PhongMaterial TranslucentRed(Vector3D(0.9f,0.2f,0.1f),0.5f,0.0f,0.0f,0.0f,1.9f);
-    const PhongMaterial TranslucentBlue(Vector3D(0.2f,0.1f,0.9f),0.5f,0.0f,0.0f,0.1f,0.9f);
+    const std::shared_ptr<Material> TranslucentGreen = std::make_shared<PhongMaterial>(Vector3D(0.1f,0.9f,0.2f),0.5f,0.0f,0.0f,0.1f,0.9f);
+    const std::shared_ptr<Material> TranslucentRed = std::make_shared<PhongMaterial>(Vector3D(0.9f,0.2f,0.1f),0.5f,0.0f,0.0f,0.0f,1.9f);
+    const std::shared_ptr<Material> TranslucentBlue = std::make_shared<PhongMaterial>(Vector3D(0.2f,0.1f,0.9f),0.5f,0.0f,0.0f,0.1f,0.9f);
 
-    const PhongMaterial Transparent(Vector3D(1.0f,1.0f,1.0f),0.5f,0.9f,1.0f,0.0f,0.9f);
+    const std::shared_ptr<Material> Transparent = std::make_shared<PhongMaterial>(Vector3D(1.0f,1.0f,1.0f),0.5f,0.9f,1.0f,0.0f,0.9f);
 
-    const PhongMaterial WhiteLight(Vector3D(1.0f,1.0f,1.0f),0.0f,0.0f,0.0f,1.0f,0.0f);
+    const std::shared_ptr<Material> WhiteLight = std::make_shared<PhongMaterial>(Vector3D(1.0f,1.0f,1.0f),0.0f,0.0f,0.0f,1.0f,0.0f);
 
-    const PhongMaterial Blank(Vector3D(0.0f,0.0f,0.0f),0.0f,0.0f,0.0f,0.0f,0.0f);
+    const std::shared_ptr<Material> Blank = std::make_shared<PhongMaterial>(Vector3D(0.0f,0.0f,0.0f),0.0f,0.0f,0.0f,0.0f,0.0f);
 
 }

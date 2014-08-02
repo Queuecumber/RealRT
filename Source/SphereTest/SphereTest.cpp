@@ -45,7 +45,9 @@ int main(int argc, char **argv)
 	std::shared_ptr<Sphere> s2 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,4.0,0.0),0.5);
 	std::shared_ptr<Sphere> s3 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,2.0,0.0),0.5);
 	std::shared_ptr<Sphere> s4 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,0.0,0.0),0.5);
-	std::shared_ptr<Sphere> s5 = std::make_shared<Sphere>(ReflectiveBlue,Vector3D(5.0,0.0,0.0),1.5);
+	std::shared_ptr<Sphere> s5 = std::make_shared<Sphere>(ReflectiveBlue,Vector3D(5.0,0.0,2.0));
+
+	std::shared_ptr<Sphere> lens = std::make_shared<Sphere>(Water, Vector3D(0.0, 1.0, -3.0), 1.0);
 
 	std::shared_ptr<Plane> floorobj = std::make_shared<Plane>(Mirror,Vector3D(0.0,1.0,0.0),3.0);
 
@@ -60,6 +62,8 @@ int main(int argc, char **argv)
 	engine->AddWorldObject(s3);
 	engine->AddWorldObject(s4);
 	engine->AddWorldObject(s5);
+
+	engine->AddWorldObject(lens);
 
 	engine->AddWorldObject(l1);
 	engine->AddWorldObject(l2);

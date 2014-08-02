@@ -84,11 +84,11 @@ RTEngine::RTEngine(int width,int height)
 
 void RTEngine::_ScreenToLogical(const int i, const int j, float &x, float &y) const
 {
-    float widthScalar = float(LogicalWidth) / float(_ScreenWidth);
-    float heightScalar = float(LogicalHeight) / float(_ScreenHeight);
+    double widthScalar = _LogicalWidth / float(_ScreenWidth);
+    double heightScalar = _LogicalHeight / float(_ScreenHeight);
 
-    x = (i * widthScalar) - (LogicalWidth / 2.f);
-    y = -((j * heightScalar) - (LogicalHeight / 2.f));
+    x = (i * widthScalar) - (_LogicalWidth / 2.f);
+    y = -((j * heightScalar) - (_LogicalHeight / 2.f));
 }
 
 unsigned char *RTEngine::Screen(void) const
@@ -640,6 +640,19 @@ void RTEngine::_Resize(int width, int height)
 
 	_Screen.reset(new unsigned char[width * height * 3]);
     std::fill(_Screen.get(), _Screen.get() + (width * height * 3), 0);
+
+    if(width < height)
+    {
+        float aspectRatio = float(height) / float(width);
+        _LogicalWidth = LogicalSpaceSize;
+        _LogicalHeight = aspectRatio * float(_LogicalWidth);
+    }
+    else
+    {
+        float aspectRatio = float(width) / float(height);
+        _LogicalHeight = LogicalSpaceSize;
+        _LogicalWidth = aspectRatio * float(_LogicalHeight);
+    }
 }
 
 

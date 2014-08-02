@@ -49,8 +49,7 @@ namespace RealRT
     public:
         static const int EyeDepth = 5;	// Distance from the origin to put the eye point on the Z-axis
         static const int MaxTraceIterations = 6; // Maximum number of reflection/refractions
-        static const int LogicalWidth = 20;
-        static const int LogicalHeight = 20;
+        static const int LogicalSpaceSize = 20;
 
         ~RTEngine(void);
 
@@ -116,6 +115,9 @@ namespace RealRT
         std::unique_ptr<unsigned char[]> _Screen;
 
         static std::shared_ptr<RTEngine> _Instance;
+
+        double _LogicalWidth = 20;
+        double _LogicalHeight = 20;
     };
 
 }

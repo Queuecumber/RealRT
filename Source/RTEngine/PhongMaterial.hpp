@@ -26,11 +26,14 @@ namespace RealRT
 
     const std::shared_ptr<Material> Mirror = std::make_shared<PhongMaterial>(Vector3D(1.0,1.0,1.0),0.9,0.0,0.0,0.1,0.9);
 
-    const std::shared_ptr<Material> TranslucentGreen = std::make_shared<PhongMaterial>(Vector3D(0.1,0.9,0.2),0.5,0.0,0.0,0.1,0.9);
-    const std::shared_ptr<Material> TranslucentRed = std::make_shared<PhongMaterial>(Vector3D(0.9,0.2,0.1),0.5,0.0,0.0,0.0,1.9);
-    const std::shared_ptr<Material> TranslucentBlue = std::make_shared<PhongMaterial>(Vector3D(0.2,0.1,0.9),0.5,0.0,0.0,0.1,0.9);
+    const std::shared_ptr<Material> TranslucentGreen = std::make_shared<PhongMaterial>(Vector3D(0.1,0.9,0.2),0.4,0.9,1.3,0.1,0.9);
+    const std::shared_ptr<Material> TranslucentRed = std::make_shared<PhongMaterial>(Vector3D(0.9,0.2,0.1),0.4,0.9,1.3,0.1,0.9);
+    const std::shared_ptr<Material> TranslucentBlue = std::make_shared<PhongMaterial>(Vector3D(0.2,0.1,0.9),0.4,0.9,1.3,0.1,0.9);
 
-    const std::shared_ptr<Material> Transparent = std::make_shared<PhongMaterial>(Vector3D(1.0,1.0,1.0),0.5,0.9,1.0,0.0,0.9);
+    const std::shared_ptr<Material> Transparent = std::make_shared<PhongMaterial>(Vector3D(1.0,1.0,1.0),0.1,0.9,1.0,0.0,0.9);
+
+    const std::shared_ptr<Material> Glass = std::make_shared<PhongMaterial>(Vector3D(1.0,1.0,1.0),0.1,0.9,1.5,0.0,0.9);
+    const std::shared_ptr<Material> Water = std::make_shared<PhongMaterial>(Vector3D(1.0,1.0,1.0),0.1,0.9,1.3,0.0,0.9);
 
     const std::shared_ptr<Material> WhiteLight = std::make_shared<PhongMaterial>(Vector3D(1.0,1.0,1.0),0.0,0.0,0.0,1.0,0.0);
 

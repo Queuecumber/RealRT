@@ -5,6 +5,7 @@
 #include "Sphere.hpp"
 #include <iostream>
 #include <algorithm>
+#include <limits>
 
 namespace RealRT
 {
@@ -131,7 +132,8 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
 {
     //begin traversing the world
     //
-    double dist,closestDist = 1000000;
+    double usableEpsilion = std::numeric_limits<float>::epsilon(); // Epsilon for a float will always produce a usable delta for doubles
+    double dist,closestDist = std::numeric_limits<double>::infinity();
     std::shared_ptr<Shape> closest;
     bool closestFlipNormals;
     bool flipnormals = false;
@@ -187,7 +189,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
                 //calculate occlusion (for a pointlike source this is boolean)
                 // Note that I'm adding a small offset in the direction we want to go so that we don't
                 // intersect with the current shape
-                Ray occlRay(intersectPoint + (0.0001 * toLight), toLight);
+                Ray occlRay(intersectPoint + (usableEpsilion * toLight), toLight);
                 double occlusion = 1.0;
                 bool trash;
                 for(std::shared_ptr<Shape> o : _World)
@@ -222,7 +224,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
             Vector3D reflectionDir;
             reflectionDir = tracer.Direction() - 2.0 * (tracer.Direction() * unitNormal) * unitNormal;
 
-            Ray reflected(intersectPoint + (0.0001 * reflectionDir), reflectionDir);
+            Ray reflected(intersectPoint + (usableEpsilion * reflectionDir), reflectionDir);
 
             Vector3D reflCol = _RecursiveTrace(reflected, depth + 1, refrIndex);
 
@@ -243,7 +245,7 @@ Vector3D RTEngine::_RecursiveTrace(const Ray &tracer, const int depth, const dou
             if(cosT2 > 0.0)
             {
                 Vector3D refractedDir = (relIndex * tracer.Direction()) + (relIndex * cosI - sqrt(cosT2)) * unitNormal;
-                Ray refracted(intersectPoint + (0.0001 * refractedDir), refractedDir);
+                Ray refracted(intersectPoint + (usableEpsilion * refractedDir), refractedDir);
 
                 Vector3D refrCol = _RecursiveTrace(refracted, depth + 1, rindex);
 

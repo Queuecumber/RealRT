@@ -55,6 +55,8 @@ namespace RealRT
 
 using namespace RealRT;
 
+std::shared_ptr<RTEngine> RTEngine::_Instance(nullptr);
+
 std::shared_ptr<RTEngine> RTEngine::Instantiate(int width, int height)
 {
 	//before instantiation, make sure there isnt already one
@@ -87,6 +89,11 @@ void RTEngine::_ScreenToLogical(const int i, const int j, float &x, float &y) co
 
     x = (i * widthScalar) - (LogicalWidth / 2.f);
     y = (j * heightScalar) - (LogicalHeight / 2.f);
+}
+
+unsigned char *RTEngine::Screen(void) const
+{
+    return _Screen.get();
 }
 
 void RTEngine::CalculateScene()

@@ -88,7 +88,7 @@ void RTEngine::_ScreenToLogical(const int i, const int j, float &x, float &y) co
     float heightScalar = float(LogicalHeight) / float(_ScreenHeight);
 
     x = (i * widthScalar) - (LogicalWidth / 2.f);
-    y = (j * heightScalar) - (LogicalHeight / 2.f);
+    y = -((j * heightScalar) - (LogicalHeight / 2.f));
 }
 
 unsigned char *RTEngine::Screen(void) const

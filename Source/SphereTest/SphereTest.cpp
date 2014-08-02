@@ -5,9 +5,7 @@
 #include "../RTEngine/Plane.hpp"
 #include "../RTEngine/SphericalLight.hpp"
 #include <cstdio>
-#include <fstream>
 #include <png.h>
-#include <opencv2/opencv.hpp>
 
 using namespace RealRT;
 
@@ -26,7 +24,7 @@ void writeBufferAsPng(std::string fileName, unsigned char *buffer, int width, in
 	png_set_IHDR(png_ptr, info_ptr, width, height, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
 	png_write_info(png_ptr, info_ptr);
 
-	png_bytepp rowPointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
+	png_bytepp rowPointers = new png_bytep[height];
 	for(int i = 0; i < height; i++)
 		rowPointers[i] = buffer + (width * i * 3);
 
@@ -34,20 +32,9 @@ void writeBufferAsPng(std::string fileName, unsigned char *buffer, int width, in
 
 	png_write_end(png_ptr, NULL);
 
+	delete rowPointers;
+
 	std::fclose(fh);
-}
-
-void writeBufferAsRaw(std::string fileName, unsigned char *buffer, int width, int height)
-{
-	std::ofstream img(fileName + ".raw", std::ios::binary);
-
-	for(int j = 0; j < height; j++)
-	{
-		for(int i = 0; i < width; i++)
-		{
-			img << buffer[((j * width) + i) * 3 + 0] << buffer[((j * width) + i) * 3 + 1] << buffer[((j * width) + i) * 3 + 2];
-		}
-	}
 }
 
 int main(int argc, char **argv)

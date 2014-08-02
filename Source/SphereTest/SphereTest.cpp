@@ -5,9 +5,14 @@
 #include "../RTEngine/Plane.hpp"
 #include "../RTEngine/SphericalLight.hpp"
 #include <cstdio>
+#include <fstream>
 #include <png.h>
+#include <opencv2/opencv.hpp>
 
 using namespace RealRT;
+
+const int Width = 2560;
+const int Height = 1600;
 
 void writeBufferAsPng(std::string fileName, unsigned char *buffer, int width, int height)
 {
@@ -23,7 +28,7 @@ void writeBufferAsPng(std::string fileName, unsigned char *buffer, int width, in
 
 	png_bytepp rowPointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
 	for(int i = 0; i < height; i++)
-		rowPointers[i] = buffer + (width * i);
+		rowPointers[i] = buffer + (width * i * 3);
 
 	png_write_image(png_ptr, rowPointers);
 
@@ -32,33 +37,46 @@ void writeBufferAsPng(std::string fileName, unsigned char *buffer, int width, in
 	std::fclose(fh);
 }
 
+void writeBufferAsRaw(std::string fileName, unsigned char *buffer, int width, int height)
+{
+	std::ofstream img(fileName + ".raw", std::ios::binary);
+
+	for(int j = 0; j < height; j++)
+	{
+		for(int i = 0; i < width; i++)
+		{
+			img << buffer[((j * width) + i) * 3 + 0] << buffer[((j * width) + i) * 3 + 1] << buffer[((j * width) + i) * 3 + 2];
+		}
+	}
+}
+
 int main(int argc, char **argv)
 {
-	std::shared_ptr<RTEngine> engine = RTEngine::Instantiate(1280, 1024);
+	std::shared_ptr<RTEngine> engine = RTEngine::Instantiate(Width, Height);
 
-	Sphere s1(DiffuseRed,{-5.0,0.0,2.0});
-	Sphere s2(DiffuseGreen,{0.0,4.0,0.0},0.5);
-	Sphere s3(DiffuseGreen,{0.0,2.0,0.0},0.5);
-	Sphere s4(DiffuseGreen,{0.0,0.0,0.0},0.5);
-	Sphere s5(ReflectiveBlue,{5.0,0.0,0.0},1.5);
+	std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>(DiffuseRed,Vector3D(-5.0,0.0,2.0));
+	std::shared_ptr<Sphere> s2 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,4.0,0.0),0.5);
+	std::shared_ptr<Sphere> s3 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,2.0,0.0),0.5);
+	std::shared_ptr<Sphere> s4 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,0.0,0.0),0.5);
+	std::shared_ptr<Sphere> s5 = std::make_shared<Sphere>(ReflectiveBlue,Vector3D(5.0,0.0,0.0),1.5);
 
-	Plane floorobj(Mirror,{0.0,1.0,0.0},3.0);
+	std::shared_ptr<Plane> floorobj = std::make_shared<Plane>(Mirror,Vector3D(0.0,1.0,0.0),3.0);
 
-	SphericalLight l1(WhiteLight,{-9.5,6.0,0.0},0.1);
-	SphericalLight l2(WhiteLight,{0.0,6.0,-2.0},0.1);
-	SphericalLight l3(WhiteLight,{9.5,6.0,0.0},0.1);
+	std::shared_ptr<SphericalLight> l1 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(-9.5,6.0,0.0),0.1);
+	std::shared_ptr<SphericalLight> l2 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(0.0,6.0,-2.0),0.1);
+	std::shared_ptr<SphericalLight> l3 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(9.5,6.0,0.0),0.1);
 
-	engine->AddWorldObject(std::shared_ptr<Shape>(&floorobj));
+	engine->AddWorldObject(floorobj);
 
-	engine->AddWorldObject(std::shared_ptr<Shape>(&s1));
-	engine->AddWorldObject(std::shared_ptr<Shape>(&s2));
-	engine->AddWorldObject(std::shared_ptr<Shape>(&s3));
-	engine->AddWorldObject(std::shared_ptr<Shape>(&s4));
-	engine->AddWorldObject(std::shared_ptr<Shape>(&s5));
+	engine->AddWorldObject(s1);
+	engine->AddWorldObject(s2);
+	engine->AddWorldObject(s3);
+	engine->AddWorldObject(s4);
+	engine->AddWorldObject(s5);
 
-	engine->AddWorldObject(std::shared_ptr<Shape>(&l1));
-	engine->AddWorldObject(std::shared_ptr<Shape>(&l2));
-	engine->AddWorldObject(std::shared_ptr<Shape>(&l3));
+	engine->AddWorldObject(l1);
+	engine->AddWorldObject(l2);
+	engine->AddWorldObject(l3);
 
 	engine->CalculateScene();
 
@@ -68,7 +86,7 @@ int main(int argc, char **argv)
 	if(argc > 1)
 		output = argv[1];
 
-	writeBufferAsPng(output, rendered, 1280, 1024);
+	writeBufferAsPng(output, rendered, Width, Height);
 
 	return 0;
 }

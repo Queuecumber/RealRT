@@ -1,21 +1,3 @@
-/*
-
-	RTEngine
-
-	Ray Tracing engine for furture real time
-	use via nVidia CUDA technology
-
-	link to RTEngine.lib, include RTEngine.h
-*/
-
-/*
-	RTEngine.h
-
-	Main include for the engine and definition of the
-	RTEngine class
-
-*/
-
 #pragma once
 
 #include <thread>
@@ -29,7 +11,6 @@ namespace RealRT
 {
     class Shape;
     class Window;
-    class TraceNode;
 
     /*
         class RTEngine

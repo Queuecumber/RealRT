@@ -40,7 +40,7 @@ void writeBufferAsPng(std::string fileName, unsigned char *buffer, int width, in
 
 int main(int argc, char **argv)
 {
-	std::shared_ptr<RTEngine> engine = RTEngine::Instantiate(Width, Height);
+	RTEngine engine(Width, Height);
 
 	std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>(DiffuseRed,Vector3D(-5.0,0.0,2.0));
 	std::shared_ptr<Sphere> s2 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,4.0,0.0),0.5);
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	std::shared_ptr<Sphere> s4 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,0.0,0.0),0.5);
 	std::shared_ptr<Sphere> s5 = std::make_shared<Sphere>(ReflectiveBlue,Vector3D(5.0,0.0,2.0));
 
-	std::shared_ptr<Sphere> lens = std::make_shared<Sphere>(Water, Vector3D(0.0, 1.0, -3.0), 1.0);
+	std::shared_ptr<Sphere> lens = std::make_shared<Sphere>(Water, Vector3D(0.0,1.0,-3.0), 1.0);
 
 	std::shared_ptr<Plane> floorobj = std::make_shared<Plane>(Mirror,Vector3D(0.0,1.0,0.0),3.0);
 
@@ -56,23 +56,23 @@ int main(int argc, char **argv)
 	std::shared_ptr<SphericalLight> l2 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(0.0,6.0,-2.0),0.1);
 	std::shared_ptr<SphericalLight> l3 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(9.5,6.0,0.0),0.1);
 
-	engine->AddWorldObject(floorobj);
+	engine.AddWorldObject(floorobj);
 
-	engine->AddWorldObject(s1);
-	engine->AddWorldObject(s2);
-	engine->AddWorldObject(s3);
-	engine->AddWorldObject(s4);
-	engine->AddWorldObject(s5);
+	engine.AddWorldObject(s1);
+	engine.AddWorldObject(s2);
+	engine.AddWorldObject(s3);
+	engine.AddWorldObject(s4);
+	engine.AddWorldObject(s5);
 
-	engine->AddWorldObject(lens);
+	engine.AddWorldObject(lens);
 
-	engine->AddWorldObject(l1);
-	engine->AddWorldObject(l2);
-	engine->AddWorldObject(l3);
+	engine.AddWorldObject(l1);
+	engine.AddWorldObject(l2);
+	engine.AddWorldObject(l3);
 
-	engine->Render<RecursiveTraceStrategy>();
+	engine.Render<RecursiveTraceStrategy>();
 
-	unsigned char *rendered = engine->Screen();
+	unsigned char *rendered = engine.Screen();
 
 	std::string output = "out.png";
 	if(argc > 1)

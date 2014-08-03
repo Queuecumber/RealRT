@@ -31,27 +31,6 @@ namespace RealRT
 
 using namespace RealRT;
 
-std::shared_ptr<RTEngine> RTEngine::_Instance(nullptr);
-
-std::shared_ptr<RTEngine> RTEngine::Instantiate(int width, int height)
-{
-	//before instantiation, make sure there isnt already one
-	//
-	if(_Instance == nullptr)
-	{
-		_Instance.reset(new RTEngine(width, height));
-	}
-	else
-	{
-		if(width != _Instance->_ScreenWidth)
-		{
-			_Instance->_Resize(width,height);
-		}
-	}
-
-	return _Instance;
-}
-
 RTEngine::RTEngine(int width,int height)
 	: _MaxAsyncOperations(4)
 {
@@ -265,10 +244,4 @@ void RTEngine::_Resize(int width, int height)
         _LogicalHeight = LogicalSpaceSize;
         _LogicalWidth = aspectRatio * double(_LogicalHeight);
     }
-}
-
-
-RTEngine::~RTEngine(void)
-{
-
 }

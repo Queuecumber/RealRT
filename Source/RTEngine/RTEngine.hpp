@@ -23,10 +23,10 @@
 #include <list>
 #include <stack>
 #include "Vector3D.hpp"
+#include "Ray.hpp"
 
 namespace RealRT
 {
-    class Ray;
     class Shape;
     class Window;
     class TraceNode;
@@ -62,13 +62,12 @@ namespace RealRT
         static std::shared_ptr<RTEngine> Instantiate(int width = 1024, int height = 768);
 
         /*
-            CalculateScene
+            Render
 
             Fills in the virtual screen, ray tracing the scene
         */
-        void CalculateScene();
-
-        void CalculateSceneAsync();
+        template <class Strategy>
+        void Render(void);
 
         /*
             AddWorldObject(shape3D *obj)
@@ -94,12 +93,6 @@ namespace RealRT
 
         void _Resize(int width, int height);
 
-        Vector3D _RecursiveTrace(const Ray &tracer, const int depth, const double refrIndex) const;
-
-        Vector3D _IterativeTrace(Ray &tracer);
-
-        inline bool _Absorb(TraceNode &current);
-
         inline void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
 
         std::list<std::shared_ptr<Shape>> _World;
@@ -119,5 +112,4 @@ namespace RealRT
         double _LogicalWidth = 20;
         double _LogicalHeight = 20;
     };
-
 }

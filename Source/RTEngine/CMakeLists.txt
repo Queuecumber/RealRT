@@ -10,6 +10,8 @@ set( RTEngine_HEADERS
     Material.hpp
     PhongMaterial.hpp
     Vector3D.hpp
+    RecursiveTraceStrategy.hpp
+    IterativeTraceStrategy.hpp
 )
 
 set( RTEngine_SOURCES
@@ -22,8 +24,10 @@ set( RTEngine_SOURCES
     Material.cpp
     PhongMaterial.cpp
     Vector3D.cpp
+    RecursiveTraceStrategy.cpp
+    IterativeTraceStrategy.cpp
 )
 
-add_library(RTEngine SHARED ${RTEngine_HEADERS} ${RTEngine_SOURCES})
+add_library(RTEngine ${RTEngine_HEADERS} ${RTEngine_SOURCES})
 
 set_target_properties(RTEngine PROPERTIES DEBUG_POSTFIX "d")

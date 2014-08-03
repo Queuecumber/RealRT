@@ -4,6 +4,7 @@
 #include "../RTEngine/Sphere.hpp"
 #include "../RTEngine/Plane.hpp"
 #include "../RTEngine/SphericalLight.hpp"
+#include "../RTEngine/RecursiveTraceStrategy.hpp"
 #include <cstdio>
 #include <png.h>
 
@@ -69,7 +70,7 @@ int main(int argc, char **argv)
 	engine->AddWorldObject(l2);
 	engine->AddWorldObject(l3);
 
-	engine->CalculateScene();
+	engine->Render<RecursiveTraceStrategy>();
 
 	unsigned char *rendered = engine->Screen();
 

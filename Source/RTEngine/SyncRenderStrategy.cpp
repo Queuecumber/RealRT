@@ -8,7 +8,7 @@ SyncRenderStrategy::SyncRenderStrategy(int width, int height)
 
 }
 
-void SyncRenderStrategy::operator ()(const std::function<void(int, int)> &doTracing) const
+void SyncRenderStrategy::operator ()(const std::function<void (int, int)> &doTracing) const
 {
     for(int j = 0; j < _Height; j++)
     {

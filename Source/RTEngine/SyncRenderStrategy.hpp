@@ -6,7 +6,7 @@ namespace RealRT
     {
     public:
         SyncRenderStrategy(int width, int height);
-        void operator ()(const std::function<void(int, int)> &doTracing) const;
+        void operator ()(const std::function<void (int, int)> &doTracing) const;
 
     private:
         int _Width;

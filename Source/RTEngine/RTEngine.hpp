@@ -23,37 +23,40 @@ namespace RealRT
 
         void Resize(int width, int height);
 
-        template <class Strategy>
+        template <class TraceStrategy, class RenderStrategy>
         void Render(void)
         {
-            Strategy strat(_World);
+            TraceStrategy trace(_World);
+            RenderStrategy render(_ScreenWidth, _ScreenHeight);
 
             Vector3D eyeLoc = {0.0, 0.0, -EyeDepth};
 
-            for(int j = 0; j < _ScreenHeight; j++)
+            render([&trace, &eyeLoc, this](int i, int j)
             {
-                for(int i = 0; i < _ScreenWidth; i++)
+                double x, y;
+                _ScreenToLogical(i, j, x, y);
+
+                Vector3D screenPosition = {x, y, 0.0};
+
+                Ray principleRay(eyeLoc, screenPosition - eyeLoc);
+
+                Vector3D pixelColor = trace(principleRay);
+
+                Vector3D suppressedColor = pixelColor.Clip(1.0);
+
+                int red = suppressedColor.I() * 255;
+                int green = suppressedColor.J() * 255;
+                int blue = suppressedColor.K() * 255;
+
+                // Critical Section
                 {
-                    double x, y;
-                    _ScreenToLogical(i, j, x, y);
-
-                    Vector3D screenPosition = {x, y, 0.0};
-
-                    Ray tracer(eyeLoc, screenPosition - eyeLoc);
-
-                    Vector3D pixelColor = strat.Trace(tracer);
-
-                    Vector3D suppressedColor = pixelColor.Clip(1.0);
-
-                    int red = suppressedColor.I() * 255;
-                    int green = suppressedColor.J() * 255;
-                    int blue = suppressedColor.K() * 255;
+                    std::lock_guard<std::mutex> lock(_ScreenMutex);
 
                     _Screen[(j * _ScreenWidth + i) * 3] = red;
                     _Screen[(j * _ScreenWidth + i) * 3 + 1] = green;
                     _Screen[(j * _ScreenWidth + i) * 3 + 2] = blue;
                 }
-            }
+            });
         }
 
         template <class T>
@@ -89,20 +92,13 @@ namespace RealRT
 
         std::list<std::shared_ptr<Shape>> _World;
 
-        int _MaxAsyncOperations;
-        std::thread _TracerThreads[];
-
-        std::mutex _WindowMutex;
-        //std::stack<Window> _WindowStack;
-
-        std::mutex _ScreenMutex;
-
         double _LogicalWidth = 20;
         double _LogicalHeight = 20;
 
         int _ScreenWidth;
         int _ScreenHeight;
 
+        std::mutex _ScreenMutex;
         std::unique_ptr<unsigned char[]> _Screen;
     };
 }

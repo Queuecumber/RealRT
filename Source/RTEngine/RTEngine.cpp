@@ -30,7 +30,6 @@ namespace RealRT
 using namespace RealRT;
 
 RTEngine::RTEngine(int width,int height)
-	: _MaxAsyncOperations(4)
 {
 	Resize(width, height);
 }

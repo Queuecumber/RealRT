@@ -12,6 +12,7 @@ set( RTEngine_HEADERS
     Vector3D.hpp
     RecursiveTraceStrategy.hpp
     IterativeTraceStrategy.hpp
+    SyncRenderStrategy.hpp
 )
 
 set( RTEngine_SOURCES
@@ -26,6 +27,7 @@ set( RTEngine_SOURCES
     Vector3D.cpp
     RecursiveTraceStrategy.cpp
     IterativeTraceStrategy.cpp
+    SyncRenderStrategy.cpp
 )
 
 add_library(RTEngine ${RTEngine_HEADERS} ${RTEngine_SOURCES})

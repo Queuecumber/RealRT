@@ -5,6 +5,7 @@
 #include "../RTEngine/Plane.hpp"
 #include "../RTEngine/SphericalLight.hpp"
 #include "../RTEngine/RecursiveTraceStrategy.hpp"
+#include "../RTEngine/SyncRenderStrategy.hpp"
 #include <cstdio>
 #include <png.h>
 
@@ -70,7 +71,7 @@ int main(int argc, char **argv)
 	engine.AddWorldObject(l2);
 	engine.AddWorldObject(l3);
 
-	engine.Render<RecursiveTraceStrategy>();
+	engine.Render<RecursiveTraceStrategy, SyncRenderStrategy>();
 
 	unsigned char *rendered = engine.Screen();
 

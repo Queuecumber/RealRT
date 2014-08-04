@@ -4,6 +4,7 @@
 #include <mutex>
 #include <list>
 #include <stack>
+#include <memory>
 #include "Vector3D.hpp"
 #include "Ray.hpp"
 
@@ -20,27 +21,60 @@ namespace RealRT
 
         RTEngine(int width, int height);
 
-        /*
-            Render
-
-            Fills in the virtual screen, ray tracing the scene
-        */
         template <class Strategy>
-        void Render(void);
+        void Render(void)
+        {
+            Strategy strat(_World);
 
-        /*
-            AddWorldObject(shape3D *obj)
+            Vector3D eyeLoc = {0.0, 0.0, -EyeDepth};
 
-            adds the shape pointed to by obj to the world
-        */
-        void AddWorldObject(std::shared_ptr<Shape> obj);
+            for(int j = 0; j < _ScreenHeight; j++)
+            {
+                for(int i = 0; i < _ScreenWidth; i++)
+                {
+                    double x, y;
+                    _ScreenToLogical(i, j, x, y);
 
-        /*
-            AddWorldObject(shape3D *obj)
+                    Vector3D screenPosition = {x, y, 0.0};
 
-            removes the shape pointed to by obj from the world
-        */
-        void RemoveWorldObject(std::shared_ptr<Shape> obj);
+                    Ray tracer(eyeLoc, screenPosition - eyeLoc);
+
+                    Vector3D pixelColor = strat.Trace(tracer);
+
+                    Vector3D suppressedColor = pixelColor.Clip(1.0);
+
+                    int red = suppressedColor.I() * 255;
+                    int green = suppressedColor.J() * 255;
+                    int blue = suppressedColor.K() * 255;
+
+                    _Screen[(j * _ScreenWidth + i) * 3] = red;
+                    _Screen[(j * _ScreenWidth + i) * 3 + 1] = green;
+                    _Screen[(j * _ScreenWidth + i) * 3 + 2] = blue;
+                }
+            }
+        }
+
+        template <class T>
+        void AddWorldObject(T obj)
+        {
+            std::shared_ptr<Shape> shapePtr(new T(obj));
+
+            _World.push_back(shapePtr);
+        }
+
+        template <class T>
+        void RemoveWorldObject(T obj)
+        {
+            _World.remove_if([&obj](std::shared_ptr<Shape> el)
+            {
+                std::shared_ptr<T> testEl = std::dynamic_pointer_cast<T>(el);
+
+                if(testEl != nullptr)
+                    return *(testEl) == obj;
+                else
+                    return false;
+            });
+        }
 
         int ScreenWidth(void) const;
         int ScreenHeight(void) const;
@@ -50,7 +84,7 @@ namespace RealRT
     private:
         void _Resize(int width, int height);
 
-        inline void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
+        void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
 
         std::list<std::shared_ptr<Shape>> _World;
 

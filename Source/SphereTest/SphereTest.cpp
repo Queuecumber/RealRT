@@ -42,19 +42,19 @@ int main(int argc, char **argv)
 {
 	RTEngine engine(Width, Height);
 
-	std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>(DiffuseRed,Vector3D(-5.0,0.0,2.0));
-	std::shared_ptr<Sphere> s2 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,4.0,0.0),0.5);
-	std::shared_ptr<Sphere> s3 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,2.0,0.0),0.5);
-	std::shared_ptr<Sphere> s4 = std::make_shared<Sphere>(DiffuseGreen,Vector3D(0.0,0.0,0.0),0.5);
-	std::shared_ptr<Sphere> s5 = std::make_shared<Sphere>(ReflectiveBlue,Vector3D(5.0,0.0,2.0));
+	Sphere s1(DiffuseRed, {-5.0,0.0,2.0});
+	Sphere s2(DiffuseGreen, {0.0,4.0,0.0}, 0.5);
+	Sphere s3(DiffuseGreen, {0.0,2.0,0.0}, 0.5);
+	Sphere s4(DiffuseGreen, {0.0,0.0,0.0}, 0.5);
+	Sphere s5(ReflectiveBlue, {5.0,0.0,2.0});
 
-	std::shared_ptr<Sphere> lens = std::make_shared<Sphere>(Water, Vector3D(0.0,1.0,-3.0), 1.0);
+	Sphere lens(Water, {0.0,1.0,-3.0}, 1.0);
 
-	std::shared_ptr<Plane> floorobj = std::make_shared<Plane>(Mirror,Vector3D(0.0,1.0,0.0),3.0);
+	Plane floorobj(Mirror, {0.0,1.0,0.0}, 3.0);
 
-	std::shared_ptr<SphericalLight> l1 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(-9.5,6.0,0.0),0.1);
-	std::shared_ptr<SphericalLight> l2 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(0.0,6.0,-2.0),0.1);
-	std::shared_ptr<SphericalLight> l3 = std::make_shared<SphericalLight>(WhiteLight,Vector3D(9.5,6.0,0.0),0.1);
+	SphericalLight l1(WhiteLight, {-9.5,6.0,0.0}, 0.1);
+	SphericalLight l2(WhiteLight, {0.0,6.0,-2.0}, 0.1);
+	SphericalLight l3(WhiteLight, {9.5,6.0,0.0}, 0.1);
 
 	engine.AddWorldObject(floorobj);
 

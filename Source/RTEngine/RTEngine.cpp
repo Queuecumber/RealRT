@@ -1,8 +1,6 @@
 #include "RTEngine.hpp"
 #include "Ray.hpp"
 #include "Shape.hpp"
-#include "RecursiveTraceStrategy.hpp"
-#include "IterativeTraceStrategy.hpp"
 #include <algorithm>
 
 namespace RealRT
@@ -50,42 +48,6 @@ unsigned char *RTEngine::Screen(void) const
 {
     return _Screen.get();
 }
-
-template <class Strategy>
-void RTEngine::Render(void)
-{
-    Strategy strat(_World);
-
-    Vector3D eyeLoc = {0.0, 0.0, -EyeDepth};
-
-    for(int j = 0; j < _ScreenHeight; j++)
-    {
-        for(int i = 0; i < _ScreenWidth; i++)
-        {
-            double x, y;
-            _ScreenToLogical(i, j, x, y);
-
-            Vector3D screenPosition = {x, y, 0.0};
-
-            Ray tracer(eyeLoc, screenPosition - eyeLoc);
-
-            Vector3D pixelColor = strat.Trace(tracer);
-
-            Vector3D suppressedColor = pixelColor.Clip(1.0);
-
-            int red = suppressedColor.I() * 255;
-            int green = suppressedColor.J() * 255;
-            int blue = suppressedColor.K() * 255;
-
-            _Screen[(j * _ScreenWidth + i) * 3] = red;
-            _Screen[(j * _ScreenWidth + i) * 3 + 1] = green;
-            _Screen[(j * _ScreenWidth + i) * 3 + 2] = blue;
-        }
-    }
-}
-
-template void RTEngine::Render<RecursiveTraceStrategy>(void);
-template void RTEngine::Render<IterativeTraceStrategy>(void);
 
 // void RTEngine::CalculateSceneAsync()
 // {
@@ -213,16 +175,6 @@ template void RTEngine::Render<IterativeTraceStrategy>(void);
 // 	return 0;
 //
 // }
-
-void RTEngine::AddWorldObject(std::shared_ptr<Shape> obj)
-{
-	_World.push_back(obj);
-}
-
-void RTEngine::RemoveWorldObject(std::shared_ptr<Shape> obj)
-{
-	_World.remove(obj);
-}
 
 void RTEngine::_Resize(int width, int height)
 {

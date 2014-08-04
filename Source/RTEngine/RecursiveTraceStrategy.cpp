@@ -13,7 +13,7 @@ RecursiveTraceStrategy::RecursiveTraceStrategy(std::list<std::shared_ptr<Shape>>
 
 }
 
-Vector3D RecursiveTraceStrategy::Trace(const Ray &tracer, const int depth, const double refrIndex) const
+Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth, const double refrIndex) const
 {
     //begin traversing the world
     //
@@ -111,7 +111,7 @@ Vector3D RecursiveTraceStrategy::Trace(const Ray &tracer, const int depth, const
 
             Ray reflected(intersectPoint + (usableEpsilion * reflectionDir), reflectionDir);
 
-            Vector3D reflCol = Trace(reflected, depth + 1, refrIndex);
+            Vector3D reflCol = (*this)(reflected, depth + 1, refrIndex);
 
             compositeColor += shapeMat->Color().Weight(refl * reflCol);
         }
@@ -132,7 +132,7 @@ Vector3D RecursiveTraceStrategy::Trace(const Ray &tracer, const int depth, const
                 Vector3D refractedDir = (relIndex * tracer.Direction()) + (relIndex * cosI - sqrt(cosT2)) * unitNormal;
                 Ray refracted(intersectPoint + (usableEpsilion * refractedDir), refractedDir);
 
-                Vector3D refrCol = Trace(refracted, depth + 1, rindex);
+                Vector3D refrCol = (*this)(refracted, depth + 1, rindex);
 
                 compositeColor += shapeMat->Color().Weight(refr * refrCol);
             }

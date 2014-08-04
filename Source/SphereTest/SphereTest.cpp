@@ -1,4 +1,3 @@
-//include the engine code
 #include "../RTEngine/RTEngine.hpp"
 #include "../RTEngine/PhongMaterial.hpp"
 #include "../RTEngine/Sphere.hpp"
@@ -8,6 +7,8 @@
 #include "../RTEngine/SyncRenderStrategy.hpp"
 #include <cstdio>
 #include <png.h>
+#include <chrono>
+#include <iostream>
 
 using namespace RealRT;
 
@@ -71,7 +72,16 @@ int main(int argc, char **argv)
 	engine.AddWorldObject(l2);
 	engine.AddWorldObject(l3);
 
-	engine.Render<RecursiveTraceStrategy, SyncRenderStrategy>();
+	// Render the scene
+	{
+		auto startRender = std::chrono::system_clock::now();
+		std::cout << "Rendering...";
+
+		engine.Render<RecursiveTraceStrategy, SyncRenderStrategy>();
+
+		auto endRender = std::chrono::system_clock::now();
+		std::cout << (std::chrono::duration_cast<std::chrono::duration<double>>(endRender - startRender)).count() << "s" << std::endl;
+	}
 
 	unsigned char *rendered = engine.Screen();
 
@@ -79,7 +89,18 @@ int main(int argc, char **argv)
 	if(argc > 1)
 		output = argv[1];
 
-	writeBufferAsPng(output, rendered, Width, Height);
+	// Write the image
+	{
+		auto startWrite = std::chrono::system_clock::now();
+		std::cout << "Writing...";
+
+		writeBufferAsPng(output, rendered, Width, Height);
+
+		auto endWrite = std::chrono::system_clock::now();
+		std::cout << (std::chrono::duration_cast<std::chrono::duration<double>>(endWrite - startWrite)).count() << "s" << std::endl;
+	}
+
+	std::cin.get();
 
 	return 0;
 }

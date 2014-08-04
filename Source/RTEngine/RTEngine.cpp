@@ -32,7 +32,7 @@ using namespace RealRT;
 RTEngine::RTEngine(int width,int height)
 	: _MaxAsyncOperations(4)
 {
-	_Resize(width, height);
+	Resize(width, height);
 }
 
 void RTEngine::_ScreenToLogical(const int i, const int j, double &x, double &y) const
@@ -176,7 +176,7 @@ unsigned char *RTEngine::Screen(void) const
 //
 // }
 
-void RTEngine::_Resize(int width, int height)
+void RTEngine::Resize(int width, int height)
 {
 	_ScreenHeight = height;
 	_ScreenWidth = width;

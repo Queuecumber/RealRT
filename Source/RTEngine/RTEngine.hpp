@@ -21,6 +21,8 @@ namespace RealRT
 
         RTEngine(int width, int height);
 
+        void Resize(int width, int height);
+
         template <class Strategy>
         void Render(void)
         {
@@ -82,7 +84,6 @@ namespace RealRT
         unsigned char *Screen(void) const;
 
     private:
-        void _Resize(int width, int height);
 
         void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
 

@@ -1,9 +1,6 @@
 #pragma once
 
-#include <thread>
-#include <mutex>
 #include <list>
-#include <stack>
 #include <memory>
 #include "Vector3D.hpp"
 #include "Ray.hpp"
@@ -48,14 +45,9 @@ namespace RealRT
                 int green = suppressedColor.J() * 255;
                 int blue = suppressedColor.K() * 255;
 
-                // Critical Section
-                {
-                    std::lock_guard<std::mutex> lock(_ScreenMutex);
-
-                    _Screen[(j * _ScreenWidth + i) * 3] = red;
-                    _Screen[(j * _ScreenWidth + i) * 3 + 1] = green;
-                    _Screen[(j * _ScreenWidth + i) * 3 + 2] = blue;
-                }
+                _Screen[(j * _ScreenWidth + i) * 3] = red;
+                _Screen[(j * _ScreenWidth + i) * 3 + 1] = green;
+                _Screen[(j * _ScreenWidth + i) * 3 + 2] = blue;
             });
         }
 
@@ -98,7 +90,6 @@ namespace RealRT
         int _ScreenWidth;
         int _ScreenHeight;
 
-        std::mutex _ScreenMutex;
         std::unique_ptr<unsigned char[]> _Screen;
     };
 }

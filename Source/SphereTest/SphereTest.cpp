@@ -4,6 +4,7 @@
 #include "../RTEngine/Plane.hpp"
 #include "../RTEngine/SphericalLight.hpp"
 #include "../RTEngine/RecursiveTraceStrategy.hpp"
+#include "../RTEngine/AsyncRenderStrategy.hpp"
 #include "../RTEngine/SyncRenderStrategy.hpp"
 #include <cstdio>
 #include <png.h>
@@ -44,6 +45,8 @@ int main(int argc, char **argv)
 {
 	RTEngine engine(Width, Height);
 
+	Plane floorobj(Mirror, {0.0,1.0,0.0}, 3.0);
+
 	Sphere s1(DiffuseRed, {-5.0,0.0,2.0});
 	Sphere s2(DiffuseGreen, {0.0,4.0,0.0}, 0.5);
 	Sphere s3(DiffuseGreen, {0.0,2.0,0.0}, 0.5);
@@ -51,8 +54,6 @@ int main(int argc, char **argv)
 	Sphere s5(ReflectiveBlue, {5.0,0.0,2.0});
 
 	Sphere lens(Water, {0.0,1.0,-3.0}, 1.0);
-
-	Plane floorobj(Mirror, {0.0,1.0,0.0}, 3.0);
 
 	SphericalLight l1(WhiteLight, {-9.5,6.0,0.0}, 0.1);
 	SphericalLight l2(WhiteLight, {0.0,6.0,-2.0}, 0.1);
@@ -77,7 +78,7 @@ int main(int argc, char **argv)
 		auto startRender = std::chrono::system_clock::now();
 		std::cout << "Rendering...";
 
-		engine.Render<RecursiveTraceStrategy, SyncRenderStrategy>();
+		engine.Render<RecursiveTraceStrategy, AsyncRenderStrategy<8>>();
 
 		auto endRender = std::chrono::system_clock::now();
 		std::cout << (std::chrono::duration_cast<std::chrono::duration<double>>(endRender - startRender)).count() << "s" << std::endl;

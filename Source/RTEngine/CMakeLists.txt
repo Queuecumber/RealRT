@@ -13,6 +13,7 @@ set( RTEngine_HEADERS
     RecursiveTraceStrategy.hpp
     IterativeTraceStrategy.hpp
     SyncRenderStrategy.hpp
+    AsyncRenderStrategy.hpp
 )
 
 set( RTEngine_SOURCES

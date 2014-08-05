@@ -17,9 +17,9 @@ namespace RealRT
 
         void operator ()(const std::function<void (int, int)> &doTracing)
         {
-            std::array<std::thread, NumThreads> taskFutures;
+            std::array<std::thread, NumThreads> threadPool;
 
-            std::generate(taskFutures.begin(), taskFutures.end(), [&doTracing, this]()
+            std::generate(threadPool.begin(), threadPool.end(), [&doTracing, this]()
             {
                 return std::thread([&doTracing, this]()
                 {
@@ -61,7 +61,7 @@ namespace RealRT
                 });
             });
 
-            for(std::thread &f : taskFutures)
+            for(std::thread &f : threadPool)
             {
                 f.join();
             }

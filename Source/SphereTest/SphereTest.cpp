@@ -2,7 +2,7 @@
 #include "../RTEngine/PhongMaterial.hpp"
 #include "../RTEngine/Sphere.hpp"
 #include "../RTEngine/Plane.hpp"
-#include "../RTEngine/SphericalLight.hpp"
+#include "../RTEngine/PointLight.hpp"
 #include "../RTEngine/RecursiveTraceStrategy.hpp"
 #include "../RTEngine/AsyncRenderStrategy.hpp"
 #include "../RTEngine/SyncRenderStrategy.hpp"
@@ -55,23 +55,23 @@ int main(int argc, char **argv)
 
 	Sphere lens(Water, {0.0,1.0,-3.0}, 1.0);
 
-	SphericalLight l1(WhiteLight, {-9.5,6.0,0.0}, 0.1);
-	SphericalLight l2(WhiteLight, {0.0,6.0,-2.0}, 0.1);
-	SphericalLight l3(WhiteLight, {9.5,6.0,0.0}, 0.1);
+	PointLight l1(WhiteLight, {-9.5,6.0,0.0});
+	PointLight l2(WhiteLight, {0.0,6.0,-2.0});
+	PointLight l3(WhiteLight, {9.5,6.0,0.0});
 
-	engine.AddWorldObject(floorobj);
+	engine.AddShape(floorobj);
 
-	engine.AddWorldObject(s1);
-	engine.AddWorldObject(s2);
-	engine.AddWorldObject(s3);
-	engine.AddWorldObject(s4);
-	engine.AddWorldObject(s5);
+	engine.AddShape(s1);
+	engine.AddShape(s2);
+	engine.AddShape(s3);
+	engine.AddShape(s4);
+	engine.AddShape(s5);
 
-	engine.AddWorldObject(lens);
+	engine.AddShape(lens);
 
-	engine.AddWorldObject(l1);
-	engine.AddWorldObject(l2);
-	engine.AddWorldObject(l3);
+	engine.AddLight(l1);
+	engine.AddLight(l2);
+	engine.AddLight(l3);
 
 	// Render the scene
 	{

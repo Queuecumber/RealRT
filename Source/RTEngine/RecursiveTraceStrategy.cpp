@@ -16,18 +16,23 @@ RecursiveTraceStrategy::RecursiveTraceStrategy(std::list<std::shared_ptr<Shape>>
 
 Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth, const double refrIndex) const
 {
+    double usableEpsilion = std::numeric_limits<float>::epsilon(); // Epsilon for a float will always produce a usable delta for doubles (this is a little bit of a bad idea)
+
     //begin traversing the world
     //
-    double usableEpsilion = std::numeric_limits<float>::epsilon(); // Epsilon for a float will always produce a usable delta for doubles (this is a little bit of a bad idea)
-    double dist,closestDist = std::numeric_limits<double>::infinity();
-    std::shared_ptr<Shape> closest;
+    double closestDist = std::numeric_limits<double>::infinity();
     bool closestFlipNormals;
-    bool flipnormals = false;
+    std::shared_ptr<Shape> closest;
+
     for(std::shared_ptr<Shape> s : _Shapes)
     {
+        bool flipnormals;
+        double dist;
+
         //find the distance from the origin to the point of intersection
         //
-        if((dist = s->Intersect(tracer, flipnormals)))
+        std::tie(dist, flipnormals) = s->Intersect(tracer);
+        if(dist > 0)
         {
             if(dist > closestDist)
                 continue;
@@ -68,10 +73,12 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
         // intersect with the current shape
         Ray occlRay(intersectPoint + (usableEpsilion * toLight), toLight);
         double visibility = 1.0; // occlusion = 1 - visibility
-        bool trash;
         for(std::shared_ptr<Shape> o : _Shapes)
         {
-            if(o->Intersect(occlRay, trash))
+            double d;
+            std::tie(d, std::ignore) = o->Intersect(occlRay);
+
+            if(d > 0)
             {
                 visibility = 0.0;
                 break;

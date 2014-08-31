@@ -23,8 +23,10 @@ Vector3D Sphere::Center(void) const
     return _Center;
 }
 
-double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
+std::pair<double, bool> Sphere::Intersect(const Ray &incident) const
 {
+    bool flipNormals = false;
+
     Vector3D vec;
     vec = incident.Origin() - _Center;
 
@@ -39,7 +41,7 @@ double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 	double det = (b * b) - c;
 
 	if(det == 0)
-		return b;
+		return std::make_pair(b, flipNormals);
 
 	//begin distance calculation
 	//
@@ -72,7 +74,7 @@ double Sphere::Intersect(const Ray &incident, bool &flipNormals) const
 		}
 	}
 
-	return retval;
+	return std::make_pair(retval, flipNormals);
 }
 
 

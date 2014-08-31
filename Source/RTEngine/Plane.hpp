@@ -12,7 +12,7 @@ namespace RealRT
             Plane(std::shared_ptr<const Material> mat, const Vector3D &normal = {0.0, 0.0, 1.0}, double d = 5.0);
 			~Plane(void) = default;
 
-		    double Intersect(const Ray &incident, bool &flipNormals) const;
+		    std::pair<double, bool> Intersect(const Ray &incident) const;
 		    Vector3D Normal(const Vector3D &pt) const;
 
 		    bool IsLight(void) const;

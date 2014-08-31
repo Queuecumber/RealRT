@@ -1,14 +1,15 @@
 #include "RecursiveTraceStrategy.hpp"
 #include "Material.hpp"
-#include "Sphere.hpp"
+#include "Shape.hpp"
+#include "Light.hpp"
 #include "Ray.hpp"
 #include <limits>
 #include <cmath>
 
 using namespace RealRT;
 
-RecursiveTraceStrategy::RecursiveTraceStrategy(std::list<std::shared_ptr<Shape>> &world, int maxTraceIterations)
-    : _World(world), _MaxTraceIterations(maxTraceIterations)
+RecursiveTraceStrategy::RecursiveTraceStrategy(std::list<std::shared_ptr<Shape>> &shapes, std::list<std::shared_ptr<Light>> &lights, int maxTraceIterations)
+    : _Shapes(shapes), _Lights(lights), _MaxTraceIterations(maxTraceIterations)
 {
 
 }

@@ -14,6 +14,7 @@ set( RTEngine_HEADERS
     IterativeTraceStrategy.hpp
     SyncRenderStrategy.hpp
     AsyncRenderStrategy.hpp
+    Light.hpp
 )
 
 set( RTEngine_SOURCES
@@ -29,6 +30,7 @@ set( RTEngine_SOURCES
     RecursiveTraceStrategy.cpp
     IterativeTraceStrategy.cpp
     SyncRenderStrategy.cpp
+    Light.cpp
 )
 
 add_library(RTEngine ${RTEngine_HEADERS} ${RTEngine_SOURCES})

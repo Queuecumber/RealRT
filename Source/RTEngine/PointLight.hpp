@@ -1,16 +1,20 @@
 #pragma once
 
-#include "Sphere.hpp"
+#include "Light.hpp"
 
 namespace RealRT
 {
 
-    class SphericalLight : public Sphere
+    class PointLight : public Light
     {
     public:
-        SphericalLight(std::shared_ptr<const Material> mat, const Vector3D &center = {0.0, 0.0, 0.0}, double radius = 2.5);
+        PointLight(std::shared_ptr<const Material> mat, const Vector3D &pos = {0.0, 0.0, 0.0});
 
-        bool IsLight(void) const;
+        Vector3D Position(void) const;
+
+    private:
+        Vector3D _Position;
+
     };
 
 }

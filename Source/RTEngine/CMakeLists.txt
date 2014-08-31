@@ -6,7 +6,7 @@ set( RTEngine_HEADERS
     RTEngine.hpp
     Shape.hpp
     Sphere.hpp
-    SphericalLight.hpp
+    PointLight.hpp
     Material.hpp
     PhongMaterial.hpp
     Vector3D.hpp
@@ -22,7 +22,7 @@ set( RTEngine_SOURCES
     RTEngine.cpp
     Shape.cpp
     Sphere.cpp
-    SphericalLight.cpp
+    PointLight.cpp
     Material.cpp
     PhongMaterial.cpp
     Vector3D.cpp

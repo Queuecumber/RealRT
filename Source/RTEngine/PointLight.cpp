@@ -1,14 +1,14 @@
-#include "SphericalLight.hpp"
+#include "PointLight.hpp"
 
 using namespace RealRT;
 
-SphericalLight::SphericalLight(std::shared_ptr<const Material> mat, const Vector3D &center, double radius)
-    : Sphere(mat, center, radius)
+PointLight::PointLight(std::shared_ptr<const Material> mat, const Vector3D &pos)
+    : Light(mat), _Position(pos)
 {
 
 }
 
-bool SphericalLight::IsLight(void) const
+Vector3D PointLight::Position(void) const
 {
-    return true;
+    return _Position;
 }

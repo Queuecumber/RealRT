@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Light.hpp"
+#include "Vector3D.hpp"
 
 namespace RealRT
 {

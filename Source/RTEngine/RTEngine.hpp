@@ -106,7 +106,7 @@ namespace RealRT
         void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
 
         std::list<std::shared_ptr<Shape>> _Shapes;
-        std::list<std::share_ptr<Light>> _Lights;
+        std::list<std::shared_ptr<Light>> _Lights;
 
         double _LogicalWidth = 20;
         double _LogicalHeight = 20;

@@ -156,18 +156,14 @@ Vector3D Vector3D::operator -(const Vector3D &rhs) const
 
 Vector3D &Vector3D::operator +=(const Vector3D &rhs)
 {
-    _I += rhs._I;
-    _J += rhs._J;
-    _K += rhs._K;
+    (*this) = this->Add(rhs);
 
     return *this;
 }
 
 Vector3D &Vector3D::operator -=(const Vector3D &rhs)
 {
-    _I -= rhs._I;
-    _J -= rhs._J;
-    _K -= rhs._K;
+    (*this) = this->Subtract(rhs);
 
     return *this;
 }
@@ -179,9 +175,7 @@ double Vector3D::operator *(const Vector3D &rhs) const
 
 Vector3D &Vector3D::operator *=(double scalar)
 {
-    _I *= scalar;
-    _J *= scalar;
-    _K *= scalar;
+    (*this) = this->Scale(scalar);
 
     return *this;
 }

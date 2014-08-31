@@ -8,6 +8,7 @@
 namespace RealRT
 {
     class Shape;
+    class Light;
 
     class RTEngine
     {
@@ -52,17 +53,39 @@ namespace RealRT
         }
 
         template <class T>
-        void AddWorldObject(T obj)
+        void AddShape(T obj)
         {
             std::shared_ptr<Shape> shapePtr(new T(obj));
 
-            _World.push_back(shapePtr);
+            _Shapes.push_back(shapePtr);
         }
 
         template <class T>
-        void RemoveWorldObject(T obj)
+        void RemoveShape(T obj)
         {
-            _World.remove_if([&obj](std::shared_ptr<Shape> el)
+            _Shapes.remove_if([&obj](std::shared_ptr<Shape> el)
+            {
+                std::shared_ptr<T> testEl = std::dynamic_pointer_cast<T>(el);
+
+                if(testEl != nullptr)
+                    return *(testEl) == obj;
+                else
+                    return false;
+            });
+        }
+
+        template <class T>
+        void AddLight(T obj)
+        {
+            std::shared_ptr<Light> lightPtr(new T(obj));
+
+            _Lights.push_back(lightPtr);
+        }
+
+        template <class T>
+        void RemoveLight(T obj)
+        {
+            _Lights.remove_if([&obj](std::shared_ptr<Light> el)
             {
                 std::shared_ptr<T> testEl = std::dynamic_pointer_cast<T>(el);
 
@@ -82,7 +105,8 @@ namespace RealRT
 
         void _ScreenToLogical(const int i, const int j, double &x, double &y) const;
 
-        std::list<std::shared_ptr<Shape>> _World;
+        std::list<std::shared_ptr<Shape>> _Shapes;
+        std::list<std::share_ptr<Light>> _Lights;
 
         double _LogicalWidth = 20;
         double _LogicalHeight = 20;

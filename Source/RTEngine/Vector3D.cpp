@@ -109,8 +109,8 @@ double Vector3D::operator [](int i) const
         case 2:
             return _K;
 
-        //default:
-        //    throw std::exception("Vector3D index out of bounds");
+        default:
+            throw std::out_of_range("Vector3D index out of bounds");
     }
 }
 

@@ -193,9 +193,7 @@ Vector3D Vector3D::operator %(const Vector3D &rhs) const
 
 Vector3D &Vector3D::operator %=(const Vector3D &rhs)
 {
-	_I =   (_J * rhs._K) - (rhs._J * _K) ;
-    _J = -((_I * rhs._K) - (rhs._I * _K));
-    _K =   (_I * rhs._J) - (rhs._I * _J) ;
+	(*this) = this->Cross(rhs);
 
     return *this;
 }

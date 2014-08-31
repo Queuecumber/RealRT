@@ -38,7 +38,7 @@ IterativeTraceStrategy::IterativeTraceStrategy(std::list<std::shared_ptr<Shape>>
 
 Vector3D IterativeTraceStrategy::operator ()(const Ray &tracer, const int depth, const double refrIndex) const
 {
-
+    return Vector3D();
 }
 
 // vector<3,double> RTEngine::iterativeTrace(ray &initial)

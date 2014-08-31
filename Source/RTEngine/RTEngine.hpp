@@ -24,7 +24,7 @@ namespace RealRT
         template <class TraceStrategy, class RenderStrategy>
         void Render(void)
         {
-            TraceStrategy trace(_World);
+            TraceStrategy trace(_Shapes, _Lights);
             RenderStrategy render(_ScreenWidth, _ScreenHeight);
 
             Vector3D eyeLoc = {0.0, 0.0, -EyeDepth};

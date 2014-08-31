@@ -84,6 +84,5 @@ namespace RealRT
         private:
 
             double _I = 0.0, _J = 0.0, _K = 0.0;
-        };
-
+	};
 }

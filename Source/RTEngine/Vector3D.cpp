@@ -212,13 +212,13 @@ namespace RealRT
         return v.Scale(scalar);
     }
 
-    std::ostream &operator<<(std::ostream &os, const Vector3D &obj)
+    std::ostream &operator <<(std::ostream &os, const Vector3D &obj)
     {
         os << "[" << obj._I << " " << obj._J << " " << obj._K << "]";
         return os;
     }
 
-    std::istream &operator>>(std::istream &is, Vector3D &obj)
+    std::istream &operator >>(std::istream &is, Vector3D &obj)
     {
         double i, j, k;
 

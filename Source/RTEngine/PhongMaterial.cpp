@@ -9,7 +9,7 @@ PhongMaterial::PhongMaterial(const Vector3D &color, double reflectance, double r
 
 }
 
-double PhongMaterial::BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm)  const
+double PhongMaterial::Brdf(const Vector3D &in, const Vector3D &out, const Vector3D &norm)  const
 {
     double ratio = 0.0;
 

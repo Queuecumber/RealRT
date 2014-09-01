@@ -83,7 +83,7 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
         {
             //apply lighting function
             //
-            double radianceDist = shapeMat->BidirectionReflectanceDistributionFunction(tracer.Direction(), toLight, unitNormal);
+            double radianceDist = shapeMat->Brdf(tracer.Direction(), toLight, unitNormal);
 
             std::shared_ptr<const Material> lightMat = l->LightMaterial();
             compositeColor += shapeMat->Color().Weight(lightMat->Color() * radianceDist * visibility);

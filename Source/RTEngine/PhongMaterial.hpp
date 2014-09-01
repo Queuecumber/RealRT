@@ -12,7 +12,7 @@ namespace RealRT
 
             PhongMaterial(const Vector3D &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar);
 
-            double BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const;
+            double Brdf(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const;
     };
 
     //some material definitions

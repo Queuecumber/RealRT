@@ -12,8 +12,7 @@ namespace RealRT
             Material(const Vector3D &color, double reflectance, double refractance, double indexOfRefraction, double diffuseScalar, double specularScalar);
             Material(const Material &cp);
 
-
-            virtual double BidirectionReflectanceDistributionFunction(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const = 0;
+            virtual double Brdf(const Vector3D &in, const Vector3D &out, const Vector3D &norm) const = 0;
 
             Vector3D Color(void) const;
 

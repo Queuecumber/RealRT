@@ -21,17 +21,13 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
     //begin traversing the world
     //
     double closestDist = std::numeric_limits<double>::infinity();
-    bool closestFlipNormals;
     std::shared_ptr<Shape> closest;
 
     for(std::shared_ptr<Shape> s : _Shapes)
     {
-        bool flipnormals;
-        double dist;
-
         //find the distance from the origin to the point of intersection
         //
-        std::tie(dist, flipnormals) = s->Intersect(tracer);
+        double dist = s->Intersect(tracer);
         if(dist > 0)
         {
             if(dist > closestDist)
@@ -39,7 +35,6 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
 
             closestDist = dist;
             closest = s;
-            closestFlipNormals = flipnormals;
         }
     }
 
@@ -75,8 +70,7 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
         double visibility = 1.0; // occlusion = 1 - visibility
         for(std::shared_ptr<Shape> o : _Shapes)
         {
-            double d;
-            std::tie(d, std::ignore) = o->Intersect(occlRay);
+            double d = o->Intersect(occlRay);
 
             if(d > 0)
             {
@@ -121,13 +115,17 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
         // This is basically Snell's law
         double relIndex = refrIndex / rindex;
 
-        unitNormal = unitNormal * (closestFlipNormals ? -1.0 : 1.0);
+        Vector3D refractionNormal = unitNormal;
 
-        double cosI = - (unitNormal * tracer.Direction());
+        // The cosine between the incident ray's direction and the unit normal should be non-positive (e.g. angle in [PI/2, PI]), otherwise normals need to be reversed
+        if(refractionNormal * tracer.Direction() > 0)
+            refractionNormal *= -1;
+
+        double cosI = - (refractionNormal * tracer.Direction());
         double cosT2 = 1.0 - (relIndex * relIndex) * (1.0 - (cosI * cosI));
         if(cosT2 > 0.0)
         {
-            Vector3D refractedDir = (relIndex * tracer.Direction()) + (relIndex * cosI - sqrt(cosT2)) * unitNormal;
+            Vector3D refractedDir = (relIndex * tracer.Direction()) + (relIndex * cosI - sqrt(cosT2)) * refractionNormal;
             Ray refracted(intersectPoint + (usableEpsilion * refractedDir), refractedDir);
 
             Vector3D refrCol = (*this)(refracted, depth + 1, rindex);

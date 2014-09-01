@@ -23,25 +23,22 @@ Vector3D Sphere::Center(void) const
     return _Center;
 }
 
-std::pair<double, bool> Sphere::Intersect(const Ray &incident) const
+double Sphere::Intersect(const Ray &incident) const
 {
-    bool flipNormals = false;
+    // Find the vector from the ray's origin to the center of the sphere
+    Vector3D vec = incident.Origin() - _Center;
 
-    Vector3D vec;
-    vec = incident.Origin() - _Center;
-
-	//the direction std::vector doted against the position std::vector of the center of the sphere is b
+	// Project the vector above in the rays's direction, this will be b in the coming quadratic
     double b = -(vec * incident.Direction());
 
-	//c is the magnitude squared of the center position std::vector, minus the
-	//radius squared
+    // c here encasulates 4*a*c in the quadratic
     double c = vec*vec - (_Radius * _Radius);
 
 	//calculate the determinant
 	double det = (b * b) - c;
 
 	if(det == 0)
-		return std::make_pair(b, flipNormals);
+		return b; // In the one solution case, the distance is the projection computed above
 
 	//begin distance calculation
 	//
@@ -63,18 +60,16 @@ std::pair<double, bool> Sphere::Intersect(const Ray &incident) const
 			if(i1 < 0)
 			{
 				retval = i2;
-				flipNormals = true;
 			}
 			else
 			{
 				//otherwise, i1 is the closest point and the entire sphere is in front of the screen
 				retval = i1;
-				flipNormals = false;
 			}
 		}
 	}
 
-	return std::make_pair(retval, flipNormals);
+	return retval;
 }
 
 

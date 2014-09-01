@@ -12,7 +12,7 @@ namespace RealRT
 		    Sphere(std::shared_ptr<const Material> mat, const Vector3D &center = {0.0, 0.0, 0.0}, double radius = 2.5);
 		    ~Sphere(void) = default;
 
-		    std::pair<double, bool> Intersect(const Ray &incident) const;
+		    double Intersect(const Ray &incident) const;
 		    Vector3D Normal(const Vector3D &pt) const;
 
 		    double Radius(void) const;

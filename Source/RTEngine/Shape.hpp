@@ -28,7 +28,7 @@ namespace RealRT
             Shape(std::shared_ptr<const Material> mat);
 			virtual ~Shape(void) = default;
 
-			virtual std::pair<double, bool> Intersect(const Ray &incident) const = 0; //override to return the distance from the origin to the point of intersection
+			virtual double Intersect(const Ray &incident) const = 0; //override to return the distance from the origin to the point of intersection
 			virtual Vector3D Normal(const Vector3D &pt) const = 0;	//override to get the UNIT normal at the given point
 
             const std::shared_ptr<const Material> SurfaceMaterial(void) const;

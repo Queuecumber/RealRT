@@ -134,6 +134,5 @@ Vector3D RecursiveTraceStrategy::operator ()(const Ray &tracer, const int depth,
         }
     }
 
-
     return compositeColor;
 }
